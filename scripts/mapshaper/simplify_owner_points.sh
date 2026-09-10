@@ -1,0 +1,1 @@
+mapshaper data/geodata_viz/unique_us_owners_points_clustered_viz.geojson -o precision 0.001 data/geodata_viz_simplified/unique_us_owners_points_clustered_viz_simplified.geojson

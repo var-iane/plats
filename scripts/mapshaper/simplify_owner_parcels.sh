@@ -1,0 +1,3 @@
+mapshaper data/geodata_viz/us_owners_parcels_clustered_viz.geojson -simplify 25% -clean -o precision 0.00001 data/geodata_viz_simplified/us_owners_parcels_clustered_viz_simplified_aggressive.geojson
+
+mapshaper data/geodata_viz/us_owners_parcels_clustered_viz.geojson -simplify 35% -clean -o precision 0.00001 data/geodata_viz_simplified/us_owners_parcels_clustered_viz_simplified_conservative.geojson

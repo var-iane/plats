@@ -1,0 +1,56 @@
+@font-face {
+	font-family: 'Advercase';
+	src: url('/phantom-plats/fonts/Advercase.woff2') format('woff2');
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Advercase Bold';
+	src: url('/phantom-plats/fonts/Advercase_Bold.woff2') format('woff2');
+	font-style: bold;
+	font-display: swap;
+}
+
+/* some resets */
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+* {
+	margin: 0;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	overflow-wrap: break-word;
+	line-height: 1.5;
+}
+
+p {
+	text-wrap: pretty;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	text-wrap: balance;
+}
+
+:root {
+	--advercase: 'Advercase';
+}
+
+body {
+	font-family: 'Host Grotesk', 'Epilogue', sans-serif;
+	overflow-x: hidden;
+}
