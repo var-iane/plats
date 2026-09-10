@@ -7,10 +7,10 @@
 </script>
 
 
-<OpeningScene />
+<!-- <OpeningScene /> -->
 <!-- <OpeningParallax /> -->
-<ClusterScene />
+<!-- <ClusterScene /> -->
 
 <ZoomSection />
 
-<RevealScene />
+<!-- <RevealScene /> -->

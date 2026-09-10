@@ -4,6 +4,7 @@
 	import { gsap } from 'gsap';
 	import { ScrollTrigger } from 'gsap/ScrollTrigger';
 	gsap.registerPlugin(ScrollTrigger);
+	ScrollTrigger.config({ ignoreMobileResize: true });
 
 	let pinnedWrapper;
 	let units,
@@ -276,7 +277,8 @@
 	.wrapper {
 		position: relative;
 		width: 100%;
-		height: 100dvh;
+		height: 100vh;
+		height: 100lvh;
 		display: flex;
 		flex-direction: column;
 		overflow: hidden;

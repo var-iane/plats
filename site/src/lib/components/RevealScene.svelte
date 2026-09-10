@@ -4,6 +4,7 @@
 	import { gsap } from 'gsap';
 	import { ScrollTrigger } from 'gsap/ScrollTrigger';
 	gsap.registerPlugin(ScrollTrigger);
+	ScrollTrigger.config({ ignoreMobileResize: true });
 
 	let pinnedWrapper;
 	let allParcels, water, buildings, unbuiltParcels, roads, satellite;
@@ -116,9 +117,10 @@
 	.wrapper {
 		position: relative;
 		width: 100%;
-		height: 100dvh;
+		height: 100vh;
+		height: 100lvh;
 		overflow: hidden;
-		background-color: #e8e5de;
+		background-color: #eee9e8;
 	}
 
 	.map {

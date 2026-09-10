@@ -112,7 +112,11 @@
 </script>
 
 <div class="wrapper">
-	<h2>A city of cities</h2>
+
+	<div class="sticky-header">
+		<h2>A city of cities</h2>
+		<hr class="full-bleed-line">
+	</div>
 	<p>
 		Of the roughly 39,000 people who bought parcels, only 11% resided within 100 miles of Horizon City at the time. A full 80% of owners lived at least 500 miles away—not exactly "locals".
 	<br><br>
@@ -169,14 +173,14 @@
 	</div>
 
 	<!-- TODO: horizon city estates overlay... -->
-	<!-- <div class="subdivision">
+	<div class="subdivision">
 		<h3>Horizon City Estates subdivision</h3>
 		<img
 			class="legend"
 			src={`${base}/images/zooms/horizon-city-estates.png`}
 			alt="Location of Horizon City Estates subdivision"
 		/>
-		<div class="city-buttons">
+		<!-- <div class="city-buttons">
 			{#each horizonCityEstates as item (item.id)}
 				<button
 					class="city-button"
@@ -191,9 +195,9 @@
 			{#if activeItem}
 				<img src={activeItem.image} alt={`Map showing parcels owned by residents of ${activeItem.title}`} />
 			{/if}
-		</div>
-	</div> -->
-	<!-- <div class="image-grid">
+		</div> -->
+	</div>
+	<div class="image-grid">
 			{#each horizonCityEstates as item (item.title)}
 				<figure class="horizon-city-estates">
 					<p class="city">{item.title}</p>
@@ -201,7 +205,7 @@
 					<img src={item.image} alt={`Map showing parcels owned by residents of ${item.title}`} />
 				</figure>
 			{/each}
-		</div> -->
+		</div>
 </div>
 
 <style>
@@ -211,7 +215,7 @@
 		grid-template-columns: 1fr min(42rem, calc(100% - var(--viewport-padding) * 2)) 1fr;
 		gap: 0 var(--viewport-padding);
 		padding: 20px 0;
-		background-color: #e8e5de;
+		background-color: #e7eddd;
 	}
 
 	.wrapper > * {
@@ -223,9 +227,27 @@
 		grid-column: 1 / -1;
 	}
 
+	.full-bleed-line {
+		width: 100vw;
+		position: relative;
+		left: 50%;
+		transform: translateX(-50%);
+		border: none;
+		border-top: 0.5px solid black;
+		margin: 1rem 0 0 0;
+	}
+
+	.sticky-header {
+		position: sticky;
+		top: 0;
+		z-index: 2;
+		background-color: inherit;
+		padding: 1rem 0 0 0;
+	}
+
 	h2 {
 		font-family: 'Epilogue', sans-serif;
-		padding: 10px 0;
+		/* padding: 6px 0; */
 	}
 
 	h3 {
@@ -237,6 +259,7 @@
 	p {
 		font-family: 'Host Grotesk', 'Epilogue', sans-serif;
 		font-weight: 300;
+		/* padding-top: 1rem; */
 	}
 
 	.city {
@@ -301,6 +324,9 @@
 		width: 250px;
 	}
 
+	.horizon-city-estates img {
+		width: 250px;
+	}
 
 	.text {
 		max-width: 1000px;

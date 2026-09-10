@@ -4,6 +4,7 @@
 	import { gsap } from 'gsap';
 	import { ScrollTrigger } from 'gsap/ScrollTrigger';
 	gsap.registerPlugin(ScrollTrigger);
+	ScrollTrigger.config({ ignoreMobileResize: true });
 
 	let pinnedWrapper;
 	let background, areaMap, boundaryDashed, boundary, subdivisions, lots, parcels, roads, platMap, vintageMap;
@@ -126,7 +127,8 @@
 <style>
 	.wrapper {
 		position: relative;
-		height: 100dvh;
+		height: 100vh;
+		height: 100lvh;
 		width: 100%;
 		overflow: hidden;
 		/* background-color: #e7eddd; */
