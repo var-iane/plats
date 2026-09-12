@@ -6,10 +6,17 @@
 	gsap.registerPlugin(ScrollTrigger);
 	ScrollTrigger.config({ ignoreMobileResize: true });
 
-	let pinnedWrapper;
-	let background, areaMap, boundaryDashed, boundary, subdivisions, lots, parcels, roads, platMap, vintageMap;
+	let pinnedWrapper, contentContainer, captionBox;
+	let map,
+		areaMap,
+		subdivisions,
+		lots,
+		parcels,
+		roads,
+		platMap,
+		vintageMap;
 	let title, subhead;
-	let cap1, cap2, cap3, cap4, cap5, cap6;
+	let cap1, cap2, cap3, cap4, cap5, cap6, cap7, cap8;
 
 	onMount(() => {
 		const tl = gsap.timeline({
@@ -18,111 +25,118 @@
 				start: 'top top',
 				end: '+=6000',
 				pin: true,
+				scrub: 2,
 				anticipatePin: 1,
-				scrub: 1,
-				ease: 'none'
-				// markers: true
 			}
 		});
 
 		tl.to(areaMap, { opacity: 1, duration: 0 }, 0)
-			.to(boundaryDashed, { opacity: 1, duration: 0 }, 0)
-			.to(subdivisions, { opacity: 1, duration: 1.5 }, '>1')
+			.to(subdivisions, { opacity: 1, duration: 1 }, '>3')
 			.add('subdivisionsIn', '<')
-			.to(lots, { opacity: 1, duration: 1.5 }, '>1')
+			.to(lots, { opacity: 1, duration: 1 }, '>3')
 			.add('lotsIn', '<')
-			.to(parcels, { opacity: 1, duration: 1.5 }, '>1')
+			.to(parcels, { opacity: 1, duration: 1 }, '>3')
 			.add('parcelsIn', '<')
-			.to(roads, { opacity: 1, duration: 1.5 }, '>2')
-			.to(boundary, { opacity: 1, duration: 1.5 }, '<')
-			.to(boundaryDashed, { opacity: 0, duration: 0 }, '<')
+			.to(roads, { opacity: 1, duration: 1 }, '>3')
+			.to(subdivisions, { opacity: 0, duration: 1 }, '<')
+			.to(lots, { opacity: 0, duration: 1 }, '<')
+			.to(parcels, { opacity: 0, duration: 1 }, '<')
 			.add('roadsIn', '<')
-			.to(subdivisions, { opacity: 0, duration: 1.5 }, '<')
-			.to(lots, { opacity: 0, duration: 1.5 }, '<')
-			.to(parcels, { opacity: 0, duration: 1.5 }, '<')
-			.to(vintageMap, { opacity: 1, duration: 1.5 }, '>5')
+			.to(vintageMap, { opacity: 1, duration: 1 }, '>7')
+			.to(areaMap, { opacity: 0, duration: 1 }, '<')
+			.to(roads, { opacity: 0, duration: 1 }, '<')
 			.add('vintageIn', '<')
-			.to(areaMap, { opacity: 0, duration: 0.5 }, '<')
-			.to(boundary, { opacity: 0, duration: 0.5 }, '<')
-			.to(roads, { opacity: 0, duration: 0.5 }, '<')
-			.to(vintageMap, { opacity: 0, duration: 3 }, '>5')
-			.to(platMap, { opacity: 1, duration: 3 }, '<')
-			.add('platIn', '<');
+			// .add('mapsRise', '>15')
+			.to(platMap, { opacity: 1, duration: 3 }, '>20')
+			.to(vintageMap, { opacity: 0, duration: 3 }, '<')
 
 		tl.to(cap1, { opacity: 1, duration: 0 }, 0)
 			.to(cap1, { opacity: 0, duration: 0.25 }, 'subdivisionsIn')
 			.to(cap2, { opacity: 1, duration: 1.5 }, 'subdivisionsIn')
 			.to(cap2, { opacity: 0, duration: 0.25 }, 'lotsIn')
 			.to(cap3, { opacity: 1, duration: 1.5 }, 'lotsIn')
-			.to(cap3, { opacity: 0, duration: 0.1 }, 'roadsIn')
-			.to(cap4, { opacity: 1, duration: 1.5 }, 'roadsIn')
-			.to(cap4, { opacity: 0, duration: 0.1 }, 'vintageIn')
-			.to(cap5, { opacity: 1, duration: 1.5 }, 'vintageIn')
-			.to(cap5, { opacity: 0, duration: 0.1 }, '>3')
-			.to(cap6, { opacity: 1, duration: 1.5 }, '<')
-			.to(cap6, { opacity: 0, duration: 1.5 }, 'platIn');
+			.to(cap3, { opacity: 0, duration: 0.25 }, 'parcelsIn')
+			.to(cap4, { opacity: 1, duration: 1.5 }, 'parcelsIn')
+			.to(cap4, { opacity: 0, duration: 0.1 }, 'roadsIn')
+			.to(cap5, { opacity: 1, duration: 1.5 }, 'roadsIn')
+			.to(cap5, { opacity: 0, duration: 0.1 }, 'vintageIn')
+			.to(cap6, { opacity: 1, duration: 1.5 }, 'vintageIn')
+			.to(cap6, { opacity: 0, duration: 0.1 }, '>5')
+			.to(cap7, { opacity: 1, duration: 1.5 }, '<')
+			.to(cap7, { opacity: 0, duration: 0.1 }, '>5')
+			.to(cap8, { opacity: 1, duration: 1.5 }, '<')
+			.add('lastCaptionIn', '>')
 
 		tl
-			.to(
-					pinnedWrapper,
-					{ backgroundColor: '#e7eddd', duration: 2 },
-					'vintageIn'
-				)
+			// .to(
+			// 		pinnedWrapper,
+			// 		{ backgroundColor: '#e7eddd', duration: 2 },
+			// 		'vintageIn'
+			// 	)
 			// .to(background, { scale: 3, xPercent: -20, duration: 1 }, 'platIn')
-			.fromTo(background, { y: '10dvh'}, { y: '-30dvh', duration: 5 }, 'platIn')
-			.to(pinnedWrapper, { backgroundColor: '#ffffff', duration: 5 }, 'platIn')
-			.fromTo(title, { y: '50dvh' }, { y: '-130dvh', ease: 'none', duration: 5 }, 'platIn');
+			.to(map, { y: '-100vh', duration: 10, ease: 'none' }, 'lastCaptionIn+=5')
+			.to(captionBox, { y: '-125vh', duration: 10, ease: 'none' }, 'lastCaptionIn+=5')
+			.to(pinnedWrapper, { backgroundColor: '#ffffff', duration: 5, ease: 'none' }, 'lastCaptionIn+=5')
+			// .fromTo(title, { y: '150vh' }, { y: '-130vh', duration: 5, ease: 'none' }, 'lastCaptionIn+=5');
 	});
 </script>
 
 <div class="wrapper" bind:this={pinnedWrapper}>
-	<div class="background" bind:this={background} data-speed="0.1">
-		<img bind:this={areaMap} src={`${base}/images/opening/areamap.png`} alt="" class="map" />
-		<img
-			bind:this={boundaryDashed}
-			src={`${base}/images/opening/areamap-boundary-dashed.png`}
-			alt=""
-			class="map"
-		/>
-		<img
-			bind:this={boundary}
-			src={`${base}/images/opening/areamap-boundary.png`}
-			alt=""
-			class="map"
-		/>
-		<img bind:this={subdivisions} src={`${base}/images/opening/areamap-subdivisions.png`} alt="" class="map" />
-		<img bind:this={lots} src={`${base}/images/opening/areamap-lots.png`} alt="" class="map" />
-		<img bind:this={parcels} src={`${base}/images/opening/areamap-parcels.png`} alt="" class="map" />
-		<img bind:this={roads} src={`${base}/images/opening/areamap-roads.png`} alt="" class="map" />
-		<img bind:this={vintageMap} src={`${base}/images/opening/vintagemap2.png`} alt="" class="map" />
-		<img
-			bind:this={platMap}
-			src={`${base}/images/opening/platmap.png`}
-			alt=""
-			class="map"
-		/>
+	<div class="content-container" bind:this={contentContainer}>
+		<div class="map" bind:this={map}>
+			<img bind:this={areaMap} src={`${base}/images/opening/areamap.png`} alt="" class="layer" />
+			<img
+				bind:this={subdivisions}
+				src={`${base}/images/opening/areamap-subdivisions.png`}
+				alt=""
+				class="layer"
+			/>
+			<img bind:this={lots} src={`${base}/images/opening/areamap-lots.png`} alt="" class="layer" />
+			<img
+				bind:this={parcels}
+				src={`${base}/images/opening/areamap-parcels.png`}
+				alt=""
+				class="layer"
+			/>
+			<img
+				bind:this={roads}
+				src={`${base}/images/opening/areamap-roads.png`}
+				alt=""
+				class="layer"
+			/>
+			<img
+				bind:this={vintageMap}
+				src={`${base}/images/opening/vintagemap.png`}
+				alt=""
+				class="layer"
+			/>
+			<img bind:this={platMap} src={`${base}/images/opening/platmap.png`} alt="" class="layer" />
+		</div>
+		<div class="caption-box" bind:this={captionBox}>
+			<p class="caption" bind:this={cap1}>
+				In the 1960s, a company acquired a stretch of Chihuahuan desert east of El Paso, Texas.
+			</p>
+			<p class="caption" bind:this={cap2}>It split it into subdivisions...</p>
+			<p class="caption" bind:this={cap3}>
+				split those into hundreds of lots...
+			</p>
+			<p class="caption" bind:this={cap4}>
+				and those into thousands of parcels.
+			</p>
+			<p class="caption" bind:this={cap5}>
+				An entire network of streets and cul-de-sacs was etched into the desert scrub.
+			</p>
+			<p class="caption" bind:this={cap6}>
+				Door-to-door sales reps, dinner parties, and glossy mailers persuaded buyers<br> who had never set foot in the desert --
+			</p>
+			<p class="caption" bind:this={cap7}>
+				some as far away as Guam and Germany.
+			</p>
+			<p class="caption" bind:this={cap8}>Over 100,000 parcels were sold.</p>
+		 </div>
 	</div>
-	<h1 bind:this={title} data-speed="0.6">Phantom Plats</h1>
-	<p class="caption-box" bind:this={cap1}>
-		In the 1960s, a real estate development company called the Horizon Corporation acquired a patch of desert between El Paso, Texas and the Hueco Mountains.
-	</p>
-	<p class="caption-box" bind:this={cap2}>
-		It split this desert into subdivisions
-	</p>
-	<p class="caption-box" bind:this={cap3}>
-		... split those into hundreds of lots, and those further into thousands of parcels.
-	</p>
-	<p class="caption-box" bind:this={cap4}>
-		To give every parcel a real address, an entire network of suburban streets and cul-de-sacs was named and etched into the desert scrub.
-	</p>
-	<p class="caption-box" bind:this={cap5}>
-		Door-to-door salesmen and mail-order brochures convinced prospective buyers as far away as Guam and Germany to invest in a slice of the Southwest.
-	</p>
-	<p class="caption-box" bind:this={cap6}>
-		Over 100,000 parcels were sold.
-	</p>
+	<!-- <h1 bind:this={title}>Phantom Plats</h1> -->
 </div>
-
 
 <style>
 	.wrapper {
@@ -131,30 +145,70 @@
 		height: 100lvh;
 		width: 100%;
 		overflow: hidden;
-		/* background-color: #e7eddd; */
 		background-color: #fcf9f5;
 	}
 
-	.background {
+	.content-container {
 		position: absolute;
-		inset: 0;
+		top: 25%;
+		left: 50%;
+		transform: translate(-50%);
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		width: 100%;
+		max-width: 100%;
+		/* max-height: 70vh; */
+		z-index: 0;
+		/* border: 1px solid black; */
 	}
 
 	.map {
+		position: relative;
+		width: auto;
+		height: min(60vh, 80vw);
+		aspect-ratio: 5/4;
+		max-width: 100%;
+		z-index: 0;
+		/* border: 1px solid red; */
+	}
+
+	.layer {
 		position: absolute;
-		top: 25%;
-		/* transform: translateY(-50%); */
+		inset: 0;
 		width: 100%;
+		height: 100%;
+		object-fit: contain;
 		opacity: 0;
 	}
 
-	.bg-image {
+	.caption-box {
+		position: relative;
+		width: clamp(200px, 70dvw, 450px);
+		height: 7rem;
+		z-index: 3;
+		/* border: 1px solid blue; */
+	}
+
+	.caption {
 		position: absolute;
-		bottom: -50%;
-		right: 0;
-		width: 300%;
-		height: 300%;
-		object-fit: cover;
+		top: 0;
+		left: 0;
+		/* top: 75%;
+		left: 50%;
+        transform: translate(-50%); */
+		width: clamp(200px, 70dvw, 450px);
+		font-family: 'Epilogue', 'Host Grotesk', serif;
+		font-weight: 300;
+		line-height: 1.3;
+		text-align: center;
+		padding: 6px;
+		/* background-color: #ffffff; */
+		/* border: 1px solid black; */
+		border-radius: 8px;
+		z-index: 3;
+		opacity: 0;
+		/* border: 1px solid green; */
 	}
 
 	h1 {
@@ -185,29 +239,5 @@
 		transform: translate(-50%);
 		z-index: 1;
 		/* white-space: nowrap; */
-	}
-
-	.caption-box {
-		position: absolute;
-		top: 15%;
-		left: 50%;
-		transform: translate(-50%);
-		width: clamp(200px, 70dvw, 450px);
-		padding: 6px;
-		z-index: 3;
-		background-color: #ffffff;
-		border: 1px solid black;
-		border-radius: 8px;
-		line-height: 1.3;
-		font-family: 'Host Grotesk', 'Epilogue', serif;
-		font-weight: 300;
-		/* font-size: 1.2rem; */
-		opacity: 0;
-	}
-
-	.caption {
-		/* position: absolute; */
-		inset: 0;
-		opacity: 0;
 	}
 </style>

@@ -44,7 +44,6 @@
 				pin: true,
 				scrub: 1,
 				anticipatePin: 1,
-				markers: true
 			}
 		});
 
@@ -110,7 +109,7 @@
 			<p bind:this={cap12} style="color: #ffa100" class="caption">and all around</p>
 		</div>
 
-		<div class="owner-viewport">
+		<div class="owner-map">
 			<img
 				bind:this={usMap}
 				src={`${base}/images/owner-clusters/basemap.svg`}
@@ -181,7 +180,7 @@
 		</div>
 	</div>
 
-	<div class="parcel-viewport">
+	<div class="parcel-map">
 		<p class="parcel-label">Where they bought parcels</p>
 		<img
 			bind:this={units}
@@ -260,20 +259,6 @@
 </div>
 
 <style>
-	/* .wrapper {
-		background-color: white;
-        position: relative;
-        width: 100%;
-		height: 100svh;
-	} */
-
-	/* .parcel-viewport {
-        position: absolute;
-        inset: 0;
-        z-index: 0;
-		border: 0.25px solid grey;
-	} */
-
 	.wrapper {
 		position: relative;
 		width: 100%;
@@ -295,7 +280,7 @@
 		gap: 2rem;
 	}
 
-	.owner-viewport {
+	.owner-map {
 		position: relative;
 		/* flex: 0 0 auto; */
 		/* margin: 0 auto; */
@@ -335,7 +320,7 @@
 		opacity: 0;
 	}
 
-	.parcel-viewport {
+	.parcel-map {
 		flex: 2;
 		position: relative;
 		background-color: #ece9e8;

@@ -18,10 +18,8 @@
 				start: 'top top',
 				end: '+=6000',
 				pin: true,
-				scrub: 3,
+				scrub: 1,
 				anticipatePin: 1,
-				markers: true,
-				ease: 'none',
 			}
 		});
 
