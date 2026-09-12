@@ -3,10 +3,11 @@
 	import { onMount } from 'svelte';
 	import { gsap } from 'gsap';
 	import { ScrollTrigger } from 'gsap/ScrollTrigger';
-	gsap.registerPlugin(ScrollTrigger);
+	import { GSDevTools } from "gsap/GSDevTools";
+	gsap.registerPlugin(ScrollTrigger, GSDevTools);
 	ScrollTrigger.config({ ignoreMobileResize: true });
 
-	let pinnedWrapper, contentContainer, captionBox;
+	let pinnedWrapper, captionBox;
 	let map,
 		areaMap,
 		subdivisions,
@@ -16,73 +17,116 @@
 		platMap,
 		vintageMap;
 	let title, subhead;
-	let cap1, cap2, cap3, cap4, cap5, cap6, cap7, cap8;
+	let cap0, cap1, cap2, cap3, cap4, cap5, cap6, cap7, cap8;
 
 	onMount(() => {
-		const tl = gsap.timeline({
+		
+		const DEBUG = false;
+
+		const tl = gsap.timeline(
+			DEBUG ? {paused: true} : {
 			scrollTrigger: {
 				trigger: pinnedWrapper,
 				start: 'top top',
-				end: '+=6000',
+				end: () => '+=' + Math.min(Math.max(window.innerHeight * 8, 5200), 8800),
 				pin: true,
-				scrub: 2,
+				scrub: 1.5,
 				anticipatePin: 1,
+				invalidateOnRefresh: true
 			}
 		});
 
-		tl.to(areaMap, { opacity: 1, duration: 0 }, 0)
-			.to(subdivisions, { opacity: 1, duration: 1 }, '>3')
-			.add('subdivisionsIn', '<')
-			.to(lots, { opacity: 1, duration: 1 }, '>3')
-			.add('lotsIn', '<')
-			.to(parcels, { opacity: 1, duration: 1 }, '>3')
-			.add('parcelsIn', '<')
-			.to(roads, { opacity: 1, duration: 1 }, '>3')
-			.to(subdivisions, { opacity: 0, duration: 1 }, '<')
-			.to(lots, { opacity: 0, duration: 1 }, '<')
-			.to(parcels, { opacity: 0, duration: 1 }, '<')
-			.add('roadsIn', '<')
-			.to(vintageMap, { opacity: 1, duration: 1 }, '>7')
-			.to(areaMap, { opacity: 0, duration: 1 }, '<')
-			.to(roads, { opacity: 0, duration: 1 }, '<')
-			.add('vintageIn', '<')
-			// .add('mapsRise', '>15')
-			.to(platMap, { opacity: 1, duration: 3 }, '>20')
-			.to(vintageMap, { opacity: 0, duration: 3 }, '<')
+		tl.to(cap0, { opacity: 1, duration: 0 }, 0)
+			.to(cap0, { opacity: 0, duration: 3 }, 3)
+			.add('areamapIn', 7)
+			.to(areaMap, { opacity: 1, duration: 3 }, 'areamapIn')
+			.to(cap1, { opacity: 1, duration: 3 }, 'areamapIn')
+			.add('subdivisionsIn', 'areamapIn+=7')
+			.to(subdivisions, { opacity: 1, duration: 2 }, 'subdivisionsIn')
+			.to(cap1, { opacity: 0, duration: 2 }, 'subdivisionsIn')
+			.to(cap2, { opacity: 1, duration: 3 }, 'subdivisionsIn')
+			.add('lotsIn', 'subdivisionsIn+=7')
+			.to(lots, { opacity: 1, duration: 2 }, 'lotsIn')
+			.to(cap2, { opacity: 0, duration: 2 }, 'lotsIn')
+			.to(cap3, { opacity: 1, duration: 3 }, 'lotsIn')
+			.add('parcelsIn', 'lotsIn+=7')
+			.to(parcels, { opacity: 1, duration: 2 }, 'parcelsIn')
+			.to(cap3, { opacity: 0, duration: 2 }, 'parcelsIn')
+			.to(cap4, { opacity: 1, duration: 3 }, 'parcelsIn')
+			.add('roadsIn', 'parcelsIn+=9')
+			.to(roads, { opacity: 1, duration: 2 }, 'roadsIn')
+			.to(subdivisions, { opacity: 0, duration: 2 }, 'roadsIn')
+			.to(lots, { opacity: 0, duration: 2 }, 'roadsIn')
+			.to(parcels, { opacity: 0, duration: 2 }, 'roadsIn')
+			.to(cap4, { opacity: 0, duration: 2 }, 'roadsIn')
+			.to(cap5, { opacity: 1, duration: 3 }, 'roadsIn')
+			.add('preVintageFade', 'roadsIn+=9')
+			.to(areaMap, { opacity: 0, duration: 3 }, 'preVintageFade')
+			.to(roads, { opacity: 0, duration: 3 }, 'preVintageFade')
+			.to(cap5, { opacity: 0, duration: 3 }, 'preVintageFade')
+			.add('vintageIn', 'preVintageFade+=3')
+			.to(vintageMap, { opacity: 1, duration: 6 }, 'vintageIn')
+			.to(cap6, { opacity: 1, duration: 6 }, 'vintageIn')
+			.add('vintageBeat2', 'vintageIn+=11')
+			.to(cap6, { opacity: 0, duration: 2 }, 'vintageBeat2')
+			.to(cap7, { opacity: 1, duration: 3 }, 'vintageBeat2')
+			.add('contentRises', 'vintageBeat2+=8')
+			.to(map, { y: '-100vh', duration: 15, ease: 'none' }, 'contentRises')
+			.to(captionBox, { y: '-150vh', duration: 15, ease: 'none' }, 'contentRises')
+			.to(pinnedWrapper, { backgroundColor: '#ffffff', duration: 5, ease: 'none' }, 'contentRises')
+			.add('platIn', 'contentRises')
+			.to(platMap, { opacity: 1, duration: 3 }, 'platIn')
+			.to(vintageMap, { opacity: 0, duration: 3 }, 'platIn')
 
-		tl.to(cap1, { opacity: 1, duration: 0 }, 0)
-			.to(cap1, { opacity: 0, duration: 0.25 }, 'subdivisionsIn')
-			.to(cap2, { opacity: 1, duration: 1.5 }, 'subdivisionsIn')
-			.to(cap2, { opacity: 0, duration: 0.25 }, 'lotsIn')
-			.to(cap3, { opacity: 1, duration: 1.5 }, 'lotsIn')
-			.to(cap3, { opacity: 0, duration: 0.25 }, 'parcelsIn')
-			.to(cap4, { opacity: 1, duration: 1.5 }, 'parcelsIn')
-			.to(cap4, { opacity: 0, duration: 0.1 }, 'roadsIn')
-			.to(cap5, { opacity: 1, duration: 1.5 }, 'roadsIn')
-			.to(cap5, { opacity: 0, duration: 0.1 }, 'vintageIn')
-			.to(cap6, { opacity: 1, duration: 1.5 }, 'vintageIn')
-			.to(cap6, { opacity: 0, duration: 0.1 }, '>5')
-			.to(cap7, { opacity: 1, duration: 1.5 }, '<')
-			.to(cap7, { opacity: 0, duration: 0.1 }, '>5')
-			.to(cap8, { opacity: 1, duration: 1.5 }, '<')
-			.add('lastCaptionIn', '>')
+		// tl.to(cap0, { opacity: 1, duration: 0 }, 0)
+		// 	.to(cap0, { opacity: 0, duration: 3 }, 3)
+		// 	.to(cap1, { opacity: 1, duration: 3 }, 'areamapIn')
+		// 	.to(cap1, { opacity: 0, duration: 1 }, 'subdivisionsIn')
+		// 	.to(cap2, { opacity: 1, duration: 3 }, 'subdivisionsIn')
+		// 	.to(cap2, { opacity: 0, duration: 1 }, 'lotsIn')
+		// 	.to(cap3, { opacity: 1, duration: 3 }, 'lotsIn')
+		// 	.to(cap3, { opacity: 0, duration: 1 }, 'parcelsIn')
+		// 	.to(cap4, { opacity: 1, duration: 3 }, 'parcelsIn')
+		// 	.to(cap4, { opacity: 0, duration: 1 }, 'roadsIn')
+		// 	.to(cap5, { opacity: 1, duration: 3 }, 'roadsIn')
+		// 	.to(cap5, { opacity: 0, duration: 3 }, 'preVintageFade')
+		// 	.to(cap6, { opacity: 1, duration: 6 }, 'vintageIn')
+		// 	.add('vintageBeat2', '>5')
+		// 	.to(cap6, { opacity: 0, duration: 1 }, 'vintageBeat2')
+		// 	.to(cap7, { opacity: 1, duration: 3 }, 'vintageBeat2')
+		// 	.add('vintageBeat3', '>5')
+		// 	.to(cap7, { opacity: 0, duration: 1 }, 'vintageBeat3')
+		// 	.to(cap8, { opacity: 1, duration: 3 }, 'vintageBeat3')
+		// 	// .add('lastCaptionIn', '>')
+		// 	.add('contentRises', '>5')
 
-		tl
-			// .to(
-			// 		pinnedWrapper,
-			// 		{ backgroundColor: '#e7eddd', duration: 2 },
-			// 		'vintageIn'
-			// 	)
-			// .to(background, { scale: 3, xPercent: -20, duration: 1 }, 'platIn')
-			.to(map, { y: '-100vh', duration: 10, ease: 'none' }, 'lastCaptionIn+=5')
-			.to(captionBox, { y: '-125vh', duration: 10, ease: 'none' }, 'lastCaptionIn+=5')
-			.to(pinnedWrapper, { backgroundColor: '#ffffff', duration: 5, ease: 'none' }, 'lastCaptionIn+=5')
+		// tl.to(map, { y: '-100vh', duration: 10, ease: 'none' }, 'contentRises')
+		// 	.to(captionBox, { y: '-150vh', duration: 10, ease: 'none' }, 'contentRises')
+		// 	.to(pinnedWrapper, { backgroundColor: '#ffffff', duration: 5, ease: 'none' }, 'contentRises')
 			// .fromTo(title, { y: '150vh' }, { y: '-130vh', duration: 5, ease: 'none' }, 'lastCaptionIn+=5');
+
+		if (DEBUG) GSDevTools.create({animation: tl});
+		// console.log(tl.labels, tl.duration());
+		const sorted = Object.entries(tl.labels).sort((a, b) => a[1] - b[1]);
+		console.table(
+		sorted.map(([name, time], i) => ({
+			name,
+			time,
+			// gap: i ? +(time - sorted[i + 1][1]).toFixed(1) : 0,
+			hold: i < sorted.length - 1
+			? +(sorted[i + 1][1] - time).toFixed(1)
+			: +(tl.duration() - time).toFixed(1),
+			percent: +((time / tl.duration()) * 100).toFixed(1)
+		}))
+		);
 	});
 </script>
 
 <div class="wrapper" bind:this={pinnedWrapper}>
-	<div class="content-container" bind:this={contentContainer}>
+	<div class="intro">
+		<p bind:this={cap0}>This is a story about land ownership in the American Southwest.</p>
+	</div>
+	<div class="content-container">
 		<div class="map" bind:this={map}>
 			<img bind:this={areaMap} src={`${base}/images/opening/areamap.png`} alt="" class="layer" />
 			<img
@@ -114,7 +158,7 @@
 		</div>
 		<div class="caption-box" bind:this={captionBox}>
 			<p class="caption" bind:this={cap1}>
-				In the 1960s, a company acquired a stretch of Chihuahuan desert east of El Paso, Texas.
+				In the 1960s, a company called the Horizon Corporation acquired a stretch of Chihuahuan desert east of El Paso, Texas.
 			</p>
 			<p class="caption" bind:this={cap2}>It split it into subdivisions...</p>
 			<p class="caption" bind:this={cap3}>
@@ -127,15 +171,11 @@
 				An entire network of streets and cul-de-sacs was etched into the desert scrub.
 			</p>
 			<p class="caption" bind:this={cap6}>
-				Door-to-door sales reps, dinner parties, and glossy mailers persuaded buyers<br> who had never set foot in the desert --
+				Door-to-door sales reps, dinner parties, and glossy mailers persuaded buyers who had never set foot in the desert — some as far away as Guam and Germany.
 			</p>
-			<p class="caption" bind:this={cap7}>
-				some as far away as Guam and Germany.
-			</p>
-			<p class="caption" bind:this={cap8}>Over 100,000 parcels were sold.</p>
+			<p class="caption" bind:this={cap7}>Over 100,000 parcels were sold.</p>
 		 </div>
 	</div>
-	<!-- <h1 bind:this={title}>Phantom Plats</h1> -->
 </div>
 
 <style>
@@ -194,8 +234,7 @@
 		position: absolute;
 		top: 0;
 		left: 0;
-		/* top: 75%;
-		left: 50%;
+		/* left: 50%;
         transform: translate(-50%); */
 		width: clamp(200px, 70dvw, 450px);
 		font-family: 'Epilogue', 'Host Grotesk', serif;
@@ -209,6 +248,19 @@
 		z-index: 3;
 		opacity: 0;
 		/* border: 1px solid green; */
+	}
+
+	.intro {
+		position: absolute;
+		top: 10%;
+		left: 50%;
+		transform: translate(-50%);
+		width: clamp(200px, 70dvw, 450px);
+		font-family: 'Josefin Sans';
+		font-style: italic;
+		font-weight: 300;
+		font-size: 1.5rem;
+		text-align: center;
 	}
 
 	h1 {
@@ -225,19 +277,4 @@
 		z-index: 1;
 	}
 
-	h2 {
-		font-family: 'Josefin Sans';
-		font-style: italic;
-		font-weight: 300;
-		/* font-size: clamp(2rem, 20vw, 3rem); */
-		font-size: 1.5rem;
-		color: black;
-		/* -webkit-text-stroke: 1px black; */
-		position: absolute;
-		top: 30%;
-		left: 50%;
-		transform: translate(-50%);
-		z-index: 1;
-		/* white-space: nowrap; */
-	}
 </style>

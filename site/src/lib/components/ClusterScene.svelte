@@ -95,7 +95,7 @@
 		<p class="owner-label">Where owners lived</p>
 
 		<div class="caption-box">
-			<p bind:this={cap1} class="caption">People bought in from...</p>
+			<p bind:this={cap1} class="caption">In the U.S., buyers came from...</p>
 			<p bind:this={cap2} style="color: #ffa100" class="caption">New York City</p>
 			<p bind:this={cap3} style="color: #ffa100" class="caption">Chicago</p>
 			<p bind:this={cap4} style="color: #ffa100" class="caption">Cleveland</p>
@@ -173,7 +173,7 @@
 			/>
 			<img
 				bind:this={other}
-				src={`${base}/images/owner-clusters/10-clusters.svg`}
+				src={`${base}/images/owner-clusters/other.png`}
 				alt=""
 				class="layer"
 			/>
@@ -251,7 +251,7 @@
 		/>
 		<img
 			bind:this={otherParcels}
-			src={`${base}/images/parcel-clusters/10-clusters.svg`}
+			src={`${base}/images/parcel-clusters/other.png`}
 			alt=""
 			class="layer"
 		/>
@@ -306,7 +306,7 @@
 		/* z-index: 3; */
 		/* text-align: center; */
 		/* border: 0.25px solid grey; */
-		font-family: "Host Grotesk", sans-serif;
+		font-family: "Epilogue", sans-serif;
 		font-size: 1rem;
 		font-weight: 300;
 		line-height: 1.3;

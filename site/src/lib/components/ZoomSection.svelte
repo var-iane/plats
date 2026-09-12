@@ -115,7 +115,7 @@
 
 	<div class="sticky-header">
 		<h2>A city of cities</h2>
-		<hr class="full-bleed-line">
+		<!-- <hr class="full-bleed-line"> -->
 	</div>
 	<p>
 		Of the roughly 39,000 people who bought parcels, only 11% resided within 100 miles of Horizon City at the time. A full 80% of owners lived at least 500 miles away—not exactly "locals".
@@ -215,7 +215,7 @@
 		grid-template-columns: 1fr min(42rem, calc(100% - var(--viewport-padding) * 2)) 1fr;
 		gap: 0 var(--viewport-padding);
 		padding: 20px 0;
-		background-color: #e7eddd;
+		background-color: #ece9e8;
 	}
 
 	.wrapper > * {
@@ -227,7 +227,7 @@
 		grid-column: 1 / -1;
 	}
 
-	.full-bleed-line {
+	/* .full-bleed-line {
 		width: 100vw;
 		position: relative;
 		left: 50%;
@@ -235,15 +235,15 @@
 		border: none;
 		border-top: 0.5px solid black;
 		margin: 1rem 0 0 0;
-	}
+	} */
 
-	.sticky-header {
+	/* .sticky-header {
 		position: sticky;
 		top: 0;
 		z-index: 2;
 		background-color: inherit;
 		padding: 1rem 0 0 0;
-	}
+	} */
 
 	h2 {
 		font-family: 'Epilogue', sans-serif;
