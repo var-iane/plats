@@ -228,14 +228,14 @@
 		position: relative;
 		width: 100%;
 		height: 100vh;
-		height: 100dvh;
-		overflow: hidden;
+		height: 100lvh;
+		overflow: visible;
 		box-sizing: border-box;
 		/* padding: clamp(0.5rem, 2vh, 1.25rem); */
 		/* gap: clamp(0.5rem, 2vh, 1.25rem); */
 		font-family: 'Epilogue', sans-serif;
 		display: grid;
-		align-content: center;
+		align-content: start;
 		grid-template:
 			'subhead' auto
 			'owner' 1fr

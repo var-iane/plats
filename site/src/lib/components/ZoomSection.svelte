@@ -89,7 +89,7 @@
 		
 	<div class="intro">
 		<p>Why the clustering?</p>
-		<p>Sales reps were given a limited batch of inventory to sell at a time. Horizon had sales offices across the U.S. and abroad, and a rep's territory might influence who had access to which lots.</p>
+		<p>Sales reps were given a limited batch of inventory to sell at a time — say, specific blocks within a specific unit of a subdivision. Horizon had sales offices across the U.S. and abroad, and a rep's territory might influence who had access to which lots.</p>
 		<p>A rep might open an envelope at a dinner party — "these are tonight's lots!" — and warn attendees that they could be gone by morning.</p>
 		<p>
 			Zoom into a single subdivision, and the .
