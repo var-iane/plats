@@ -7,7 +7,7 @@
 	gsap.registerPlugin(ScrollTrigger, GSDevTools);
 	ScrollTrigger.config({ ignoreMobileResize: true });
 
-	let pinnedWrapper, captionBox;
+	let pinnedWrapper, contentContainer, captionBox;
 	let map,
 		areaMap,
 		subdivisions,
@@ -17,7 +17,7 @@
 		platMap,
 		vintageMap;
 	let title, subhead;
-	let cap0, cap1, cap2, cap3, cap4, cap5, cap6, cap7, cap8;
+	let intro, outro, cap1, cap2, cap3, cap4, cap5, cap6, cap7, cap8;
 
 	onMount(() => {
 		
@@ -28,17 +28,21 @@
 			scrollTrigger: {
 				trigger: pinnedWrapper,
 				start: 'top top',
+				// endTrigger: 'map',
+				// end: 'bottom top',
 				end: () => '+=' + Math.min(Math.max(window.innerHeight * 8, 5200), 8800),
 				pin: true,
 				scrub: 1.5,
 				anticipatePin: 1,
-				invalidateOnRefresh: true
+				invalidateOnRefresh: true,
+				// markers: true
 			}
 		});
 
-		tl.to(cap0, { opacity: 1, duration: 0 }, 0)
-			.to(cap0, { opacity: 0, duration: 3 }, 3)
-			.add('areamapIn', 7)
+		tl.add('introIn', 0)
+			.to(intro, { opacity: 1, duration: 0 }, 'introIn')
+			.to(intro, { opacity: 0, duration: 3 }, 'introIn+=3')
+			.add('areamapIn', 'introIn+=7')
 			.to(areaMap, { opacity: 1, duration: 3 }, 'areamapIn')
 			.to(cap1, { opacity: 1, duration: 3 }, 'areamapIn')
 			.add('subdivisionsIn', 'areamapIn+=7')
@@ -70,40 +74,21 @@
 			.add('vintageBeat2', 'vintageIn+=11')
 			.to(cap6, { opacity: 0, duration: 2 }, 'vintageBeat2')
 			.to(cap7, { opacity: 1, duration: 3 }, 'vintageBeat2')
-			.add('contentRises', 'vintageBeat2+=8')
+			.add('vintageBeat3', 'vintageBeat2+=11')
+			.to(cap7, { opacity: 0, duration: 2 }, 'vintageBeat3')
+			.to(cap8, { opacity: 1, duration: 3 }, 'vintageBeat3')
+			.add('contentRises', 'vintageBeat3+=11')
+			// .to(cap8, { opacity: 0, duration: 3 }, 'contentRises')
 			.to(map, { y: '-100vh', duration: 15, ease: 'none' }, 'contentRises')
 			.to(captionBox, { y: '-150vh', duration: 15, ease: 'none' }, 'contentRises')
+			// .fromTo(title, { y: '80vh' } , { y: '-150vh', duration: 20, ease: 'none' }, 'contentRises-=1')
 			.to(pinnedWrapper, { backgroundColor: '#ffffff', duration: 5, ease: 'none' }, 'contentRises')
-			.add('platIn', 'contentRises')
-			.to(platMap, { opacity: 1, duration: 3 }, 'platIn')
-			.to(vintageMap, { opacity: 0, duration: 3 }, 'platIn')
-
-		// tl.to(cap0, { opacity: 1, duration: 0 }, 0)
-		// 	.to(cap0, { opacity: 0, duration: 3 }, 3)
-		// 	.to(cap1, { opacity: 1, duration: 3 }, 'areamapIn')
-		// 	.to(cap1, { opacity: 0, duration: 1 }, 'subdivisionsIn')
-		// 	.to(cap2, { opacity: 1, duration: 3 }, 'subdivisionsIn')
-		// 	.to(cap2, { opacity: 0, duration: 1 }, 'lotsIn')
-		// 	.to(cap3, { opacity: 1, duration: 3 }, 'lotsIn')
-		// 	.to(cap3, { opacity: 0, duration: 1 }, 'parcelsIn')
-		// 	.to(cap4, { opacity: 1, duration: 3 }, 'parcelsIn')
-		// 	.to(cap4, { opacity: 0, duration: 1 }, 'roadsIn')
-		// 	.to(cap5, { opacity: 1, duration: 3 }, 'roadsIn')
-		// 	.to(cap5, { opacity: 0, duration: 3 }, 'preVintageFade')
-		// 	.to(cap6, { opacity: 1, duration: 6 }, 'vintageIn')
-		// 	.add('vintageBeat2', '>5')
-		// 	.to(cap6, { opacity: 0, duration: 1 }, 'vintageBeat2')
-		// 	.to(cap7, { opacity: 1, duration: 3 }, 'vintageBeat2')
-		// 	.add('vintageBeat3', '>5')
-		// 	.to(cap7, { opacity: 0, duration: 1 }, 'vintageBeat3')
-		// 	.to(cap8, { opacity: 1, duration: 3 }, 'vintageBeat3')
-		// 	// .add('lastCaptionIn', '>')
-		// 	.add('contentRises', '>5')
-
-		// tl.to(map, { y: '-100vh', duration: 10, ease: 'none' }, 'contentRises')
-		// 	.to(captionBox, { y: '-150vh', duration: 10, ease: 'none' }, 'contentRises')
-		// 	.to(pinnedWrapper, { backgroundColor: '#ffffff', duration: 5, ease: 'none' }, 'contentRises')
-			// .fromTo(title, { y: '150vh' }, { y: '-130vh', duration: 5, ease: 'none' }, 'lastCaptionIn+=5');
+			.to(platMap, { opacity: 1, duration: 3 }, 'contentRises')
+			.to(vintageMap, { opacity: 0, duration: 3 }, 'contentRises')
+			// .add('outroIn', 'contentRises+=13')
+			// .to(outro, { opacity: 1, duration: 3 }, 'outroIn')
+		
+		if (import.meta.env.DEV) window.tl = tl;
 
 		if (DEBUG) GSDevTools.create({animation: tl});
 		// console.log(tl.labels, tl.duration());
@@ -123,10 +108,10 @@
 </script>
 
 <div class="wrapper" bind:this={pinnedWrapper}>
-	<div class="intro">
-		<p bind:this={cap0}>This is a story about land ownership in the American Southwest.</p>
+	<div class="intro" bind:this={intro}>
+		<p>This is a story about land ownership in the American Southwest.</p>
 	</div>
-	<div class="content-container">
+	<div class="content-container" bind:this={contentContainer}>
 		<div class="map" bind:this={map}>
 			<img bind:this={areaMap} src={`${base}/images/opening/areamap.png`} alt="" class="layer" />
 			<img
@@ -162,20 +147,35 @@
 			</p>
 			<p class="caption" bind:this={cap2}>It split it into subdivisions...</p>
 			<p class="caption" bind:this={cap3}>
-				split those into hundreds of lots...
+				split those into hundreds of units...
 			</p>
 			<p class="caption" bind:this={cap4}>
-				and those into thousands of parcels.
+				and those into thousands of lots.
 			</p>
 			<p class="caption" bind:this={cap5}>
-				An entire network of streets and cul-de-sacs was etched into the desert scrub.
+				It bulldozed an entire network of streets and cul-de-sacs into the desert scrub.
 			</p>
 			<p class="caption" bind:this={cap6}>
-				Door-to-door sales reps, dinner parties, and glossy mailers persuaded buyers who had never set foot in the desert — some as far away as Guam and Germany.
+				Door-to-door sales reps, dinner parties, and glossy promos pitched Horizon City as a wise investment: a chance to own profitable land in the booming Southwest.
 			</p>
-			<p class="caption" bind:this={cap7}>Over 100,000 parcels were sold.</p>
+			<p class="caption" bind:this={cap7}>
+				The company targeted buyers who lived too far away to see for themselves.
+			</p>
+			<p class="caption" bind:this={cap8}>Over 100,000 parcels were sold.</p>
 		 </div>
+	<!-- <h1 bind:this={title}>Phantom Plats</h1> -->
 	</div>
+	<!-- <div class="outro" bind:this={outro}>
+		<p>
+			Horizon Corporation's sales reps went door-to-door and hosted dinner parties around the country and the world.
+		</p>
+		<p>
+			They showed potential buyers official-looking plat maps of lots tucked in cul-de-sacs, near planned schools and shopping centers. Promotional films and mail-order brochures showed lush lawns, golf courses, and thriving communities.
+		</p>
+		<p>
+			The company targeted those who lived too far to see what was obvious: This was raw desert.
+		</p>
+	</div> -->
 </div>
 
 <style>
@@ -263,11 +263,33 @@
 		text-align: center;
 	}
 
+	.outro {
+		position: absolute;
+		inset: 0;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		width: clamp(300px, 70dvw, 800px);
+		/* display: flex;
+		flex-direction: column;
+		align-items: center; */
+		font-family: 'Host Grotesk', sans-serif;
+		font-weight: 300;
+		font-size: 1rem;
+		opacity: 0;
+		z-index: 4;
+	}
+
+	.outro p {
+		margin-block: 1.5rem;
+	}
+
 	h1 {
 		font-family: 'Josefin Sans';
 		font-style: italic;
 		font-weight: 600;
 		font-size: clamp(2rem, 20vw, 8rem);
+		line-height: 1;
 		color: white;
 		-webkit-text-stroke: 1px black;
 		position: absolute;

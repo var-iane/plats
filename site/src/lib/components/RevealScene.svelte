@@ -20,6 +20,7 @@
 				pin: true,
 				scrub: 1,
 				anticipatePin: 1,
+				// markers: true,
 			}
 		});
 
@@ -57,13 +58,16 @@
 
 <div class="wrapper" bind:this={pinnedWrapper}>
 	<p class="caption-box" bind:this={cap1}>
-		Nearly 100,000 <span style="color: #731357; font-weight: bold;">parcels</span> were sold to over 36,000 individuals around the world.
+		Nearly 100,000 <span style="color: #731357; font-weight: bold;">parcels</span> were sold to over 36,000 individuals around the world. Horizon Corporation had given the impression to its customers that it, or another big developer, would develop the whole area.
 	</p>
 	<p class="caption-box" bind:this={cap2}>
-		There was one problem. <br><br> <span style="color: #3083bd; font-weight: bold;">Water lines</span> never reached most of the lots.
+		It did not.
+	</p>
+	<p>
+		Horizon Corporation funded the development of only a small core area near the golf course. <span style="color: #3083bd; font-weight: bold;">Water and electricity</span> never reached most of the lots.
 	</p>
 	<p class="caption-box" bind:this={cap3}>
-		<span style="color: #01bfc3; font-weight: bold;">Buildings</span> sprung up where water was available, but the <span style="color: #9e9a90; font-weight: bold;">rest of the parcels</span> were never built on.
+		<span style="color: #01bfc3; font-weight: bold;">Buildings</span> sprung up where utilities were available, but the <span style="color: #9e9a90; font-weight: bold;">rest of the lots</span> were never built on. Horizon Corporation never extended utilities, and most of the owners were individual consumers who could not fund infrastrucutre. That's over 80,000 acres/lots.
 	</p>
 	<p class="caption-box" bind:this={cap4}>
 		This is what Horizon City looks like now.

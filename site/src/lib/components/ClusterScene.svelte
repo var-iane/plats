@@ -6,325 +6,347 @@
 	gsap.registerPlugin(ScrollTrigger);
 	ScrollTrigger.config({ ignoreMobileResize: true });
 
-	let pinnedWrapper;
-	let units,
-		nycParcels,
-		chicagoParcels,
-		clevelandParcels,
-		seattleParcels,
-		portlandParcels,
-		phoenixParcels,
-		minneapolisParcels,
-		birminghamParcels,
-		stlouisParcels,
-		lasvegasParcels,
-		otherParcels,
-		internationalParcels;
-	let usMap,
-		nyc,
-		chicago,
-		cleveland,
-		seattle,
-		portland,
-		phoenix,
-		minneapolis,
-		birmingham,
-		stlouis,
-		lasvegas,
-		other,
-		international;
-	let cap1, cap2, cap3, cap4, cap5, cap6, cap7, cap8, cap9, cap10, cap11, cap12;
+	const cities = [
+		{ id: 'nyc', name: 'New York City', color: '#ffa100', x: 94.0, y: 33.1, anchor: 'right' },
+		{ id: 'chicago', name: 'Chicago', color: '#e73f74', x: 68.9, y: 35.2, anchor: 'right' },
+		{ id: 'cleveland', name: 'Cleveland', color: '#2f8ac4', x: 70.8, y: 42.4, anchor: 'left' },
+		{ id: 'seattle', name: 'Seattle', color: '#11a579', x: 11.0, y: 11.7, anchor: 'left' },
+		{ id: 'portland', name: 'Portland', color: '#9966cc', x: 6.3, y: 21.4, anchor: 'left' },
+		{ id: 'phoenix', name: 'Phoenix', color: '#94a800', x: 17.1, y: 61.8, anchor: 'left' },
+		{ id: 'minneapolis', name: 'Minneapolis', color: '#6666cc', x: 50.0, y: 26.0, anchor: 'left' },
+		{ id: 'birmingham', name: 'Birmingham', color: '#d326be', x: 66.4, y: 64.5, anchor: 'left' },
+		{ id: 'stlouis', name: 'St. Louis', color: '#1ebecf', x: 58.8, y: 47.0, anchor: 'left' },
+		{ id: 'lasvegas', name: 'Las Vegas', color: '#3a3b78', x: 13.7, y: 51.3, anchor: 'left' }
+		// { id: 'international', name: 'military stationed overseas', color: '#ff6b5a', x: 4.0, y: 81.5, anchor: 'left' },
+	];
+
+	let pinnedWrapper, ownerFrame, parcelCell;
+	let usMap, horizonLabel, horizonDot, ownerNote, distances, units;
+	let subhead1, subhead2;
+	let other, otherParcels, internationalNote, internationalParcels;
+	let cap1, cap2, cap3, cap4, cap5, cap6, cap7, cap8, cap9, cap10, cap11, cap12, cap13;
+
+	let ownerLayers = $state([]);
+	let parcelLayers = $state([]);
+	let labels = $state([]);
+	let headlines = $state([]);
 
 	onMount(() => {
 		const tl = gsap.timeline({
 			scrollTrigger: {
 				trigger: pinnedWrapper,
 				start: 'top top',
-				end: '+=3000',
+				end: '+=8000',
 				pin: true,
 				scrub: 1,
 				anticipatePin: 1,
+				invalidateOnRefresh: true
 			}
 		});
 
-		tl.to(units, { opacity: 1, duration: 0.5 }, 0)
-			.to(nycParcels, { opacity: 1, duration: 0.5 }, '>')
-			.to(chicagoParcels, { opacity: 1, duration: 0.5 }, '>')
-			.to(clevelandParcels, { opacity: 1, duration: 0.5 }, '>')
-			.to(seattleParcels, { opacity: 1, duration: 0.5 }, '>')
-			.to(portlandParcels, { opacity: 1, duration: 0.25 }, '>')
-			.to(phoenixParcels, { opacity: 1, duration: 0.25 }, '>')
-			.to(minneapolisParcels, { opacity: 1, duration: 0.25 }, '>')
-			.to(birminghamParcels, { opacity: 1, duration: 0.25 }, '>')
-			.to(stlouisParcels, { opacity: 1, duration: 0.25 }, '>')
-			.to(lasvegasParcels, { opacity: 1, duration: 0.25 }, '>')
-			.to(otherParcels, { opacity: 1, duration: 0.25 }, '>');
+		if (import.meta.env.DEV) {
+			ownerFrame.addEventListener('click', (e) => {
+				const r = ownerFrame.getBoundingClientRect();
+				console.log(
+					`x: ${(((e.clientX - r.left) / r.width) * 100).toFixed(1)}, y: ${(((e.clientY - r.top) / r.height) * 100).toFixed(1)}`
+				);
+			});
+		}
 
-		tl.to(usMap, { opacity: 1, duration: 0.5 }, 0)
-			.to(nyc, { opacity: 1, duration: 0.5 }, '>')
-			.to(chicago, { opacity: 1, duration: 0.5 }, '>')
-			.to(cleveland, { opacity: 1, duration: 0.5 }, '>')
-			.to(seattle, { opacity: 1, duration: 0.5 }, '>')
-			.to(portland, { opacity: 1, duration: 0.25 }, '>')
-			.to(phoenix, { opacity: 1, duration: 0.25 }, '>')
-			.to(minneapolis, { opacity: 1, duration: 0.25 }, '>')
-			.to(birmingham, { opacity: 1, duration: 0.25 }, '>')
-			.to(stlouis, { opacity: 1, duration: 0.25 }, '>')
-			.to(lasvegas, { opacity: 1, duration: 0.25 }, '>')
-			.to(other, { opacity: 1, duration: 0.25 }, '>');
+		const BEAT = 6;
+		const DIM = 0.15;
 
-		tl.to(cap1, { opacity: 1, duration: 0.5 }, 0)
-			.to(cap2, { opacity: 1, duration: 0.5 }, '>')
-			.to(cap3, { opacity: 1, duration: 0.5 }, '>')
-			.to(cap4, { opacity: 1, duration: 0.5 }, '>')
-			.to(cap5, { opacity: 1, duration: 0.5 }, '>')
-			.to(cap6, { opacity: 1, duration: 0.25 }, '>')
-			.to(cap7, { opacity: 1, duration: 0.25 }, '>')
-			.to(cap8, { opacity: 1, duration: 0.25 }, '>')
-			.to(cap9, { opacity: 1, duration: 0.25 }, '>')
-			.to(cap10, { opacity: 1, duration: 0.25 }, '>')
-			.to(cap11, { opacity: 1, duration: 0.25 }, '>')
-			.to(cap12, { opacity: 1, duration: 0.25 }, '>');
+		// initial states
+		gsap.set([ownerNote, parcelCell], { opacity: 0 });
 
-		return () => tl.scrollTrigger.kill();
+		// beat 1: owner map + distance-band points
+		tl.to([subhead1, usMap, horizonLabel, horizonDot], { opacity: 1, duration: 3 }, 0)
+			.to([ownerNote, distances], { opacity: 1, duration: 3 }, 6)
+			.to({}, { duration: 20 });
+
+		// beat 2: transition
+		tl.addLabel('transition', 20)
+			.to(
+				[horizonLabel, horizonDot, distances, subhead1],
+				{ opacity: 0, duration: 3 },
+				'transition'
+			)
+			.to([subhead2, parcelCell, units], { opacity: 1, duration: 3 }, 'transition+=1')
+			.to({}, { duration: 5 });
+
+		// beat 3: city clusters
+		tl.addLabel('citiesStart', 'transition+=10');
+
+		cities.forEach((city, i) => {
+			const at = `city${i}`;
+			tl.addLabel(at, i === 0 ? 'citiesStart' : `city${i - 1}+=${BEAT}`);
+
+			tl.to(
+				[labels[i], headlines[i], ownerLayers[i], parcelLayers[i]],
+				{ opacity: 1, duration: 2 },
+				at
+			);
+
+			if (i > 0) {
+				tl.to(
+					[labels[i - 1], ownerLayers[i - 1], parcelLayers[i - 1]],
+					{ opacity: DIM, duration: 2 },
+					at
+				).to(headlines[i - 1], { opacity: 0, duration: 2 }, at);
+			}
+		});
+
+		tl.addLabel('allOn', `city${cities.length - 1}+=${BEAT}`)
+			.to(
+				[...labels, ...headlines, ...ownerLayers, ...parcelLayers],
+				{ opacity: 1, duration: 3 },
+				'allOn'
+			)
+			.to({}, { duration: 6 })
+
+			.addLabel('international', 'allOn+=9')
+			.to([usMap, other, ...labels, ...ownerLayers, ...parcelLayers], { opacity: 0, duration: 3 }, 'international')
+			.to(internationalParcels, { opacity: 1, duration: 2 }, 'international+=2')
+			.to(internationalNote, { opacity: 1, duration: 2 }, `international+=2`)
+			.to({}, { duration: 10 });
+
+		return () => {
+			tl.scrollTrigger?.kill();
+			tl.kill();
+		};
 	});
 </script>
 
 <div class="wrapper" bind:this={pinnedWrapper}>
-	<div class="owner-section">
-		<p class="owner-label">Where owners lived</p>
+	<div class="subhead-box">
+		<p class="subhead" bind:this={subhead1}>
+			80% of buyers lived <span style="color: #ca6e56">at least 500 miles away</span>.
+		</p>
+		<p class="subhead" bind:this={subhead2}>
+			Buyers in different places were sold different inventory.
+		</p>
+	</div>
 
-		<div class="caption-box">
-			<p bind:this={cap1} class="caption">In the U.S., buyers came from...</p>
-			<p bind:this={cap2} style="color: #ffa100" class="caption">New York City</p>
-			<p bind:this={cap3} style="color: #ffa100" class="caption">Chicago</p>
-			<p bind:this={cap4} style="color: #ffa100" class="caption">Cleveland</p>
-			<p bind:this={cap5} style="color: #ffa100" class="caption">Seattle</p>
-			<p bind:this={cap6} style="color: #ffa100" class="caption">Portland</p>
-			<p bind:this={cap7} style="color: #ffa100" class="caption">Phoenix</p>
-			<p bind:this={cap8} style="color: #ffa100" class="caption">Minneapolis</p>
-			<p bind:this={cap9} style="color: #ffa100" class="caption">Birmingham</p>
-			<p bind:this={cap10} style="color: #ffa100" class="caption">St. Louis</p>
-			<p bind:this={cap11} style="color: #ffa100" class="caption">Las Vegas</p>
-			<p bind:this={cap12} style="color: #ffa100" class="caption">and all around</p>
-		</div>
-
-		<div class="owner-map">
+	<div class="cell owner-cell">
+		<p class="map-label map-label-owner" bind:this={ownerNote}>Where buyers lived</p>
+		<div class="frame owner-frame" bind:this={ownerFrame}>
 			<img
-				bind:this={usMap}
 				src={`${base}/images/owner-clusters/basemap.svg`}
 				alt=""
 				class="layer"
+				bind:this={usMap}
 			/>
-			<img bind:this={nyc} src={`${base}/images/owner-clusters/nyc.svg`} alt="" class="layer" />
+
+			<span class="city-dot" style="left: 30.7%; top: 73.3%;" bind:this={horizonDot}></span>
+
+			<span class="city-label" style="left: 22.1%; top: 77.3%" bind:this={horizonLabel}
+				>Horizon City</span
+			>
+
 			<img
-				bind:this={chicago}
-				src={`${base}/images/owner-clusters/chicago.svg`}
+				src={`${base}/images/owner-clusters/distances.png`}
 				alt=""
 				class="layer"
+				bind:this={distances}
 			/>
-			<img
-				bind:this={cleveland}
-				src={`${base}/images/owner-clusters/cleveland.svg`}
-				alt=""
-				class="layer"
-			/>
-			<img
-				bind:this={seattle}
-				src={`${base}/images/owner-clusters/seattle.svg`}
-				alt=""
-				class="layer"
-			/>
-			<img
-				bind:this={portland}
-				src={`${base}/images/owner-clusters/portland.svg`}
-				alt=""
-				class="layer"
-			/>
-			<img
-				bind:this={phoenix}
-				src={`${base}/images/owner-clusters/phoenix.svg`}
-				alt=""
-				class="layer"
-			/>
-			<img
-				bind:this={minneapolis}
-				src={`${base}/images/owner-clusters/minneapolis.svg`}
-				alt=""
-				class="layer"
-			/>
-			<img
-				bind:this={birmingham}
-				src={`${base}/images/owner-clusters/birmingham.svg`}
-				alt=""
-				class="layer"
-			/>
-			<img
-				bind:this={stlouis}
-				src={`${base}/images/owner-clusters/stlouis.svg`}
-				alt=""
-				class="layer"
-			/>
-			<img
-				bind:this={lasvegas}
-				src={`${base}/images/owner-clusters/lasvegas.svg`}
-				alt=""
-				class="layer"
-			/>
-			<img
-				bind:this={other}
-				src={`${base}/images/owner-clusters/other.png`}
-				alt=""
-				class="layer"
-			/>
+
+			{#each cities as city, i (city.id)}
+				<img
+					src={`${base}/images/owner-clusters/${city.id}.svg`}
+					alt=""
+					class="layer"
+					bind:this={ownerLayers[i]}
+				/>
+			{/each}
+
+			<!-- <img src={`${base}/images/owner-clusters/other.png`} alt="" class="layer" bind:this={other} /> -->
+
+			{#each cities as city, i (city.id)}
+				<span
+					class="city-label"
+					class:anchor-right={city.anchor === 'right'}
+					style="left: {city.x}%; top: {city.y}%; color: {city.color}"
+					bind:this={labels[i]}>{city.name}</span
+				>
+			{/each}
+
+			<p class="international-note" bind:this={internationalNote}>
+				<span style="color: #ff6b5a; font-weight: 600;">All around the world</span>: military
+				members stationed overseas, residents of Guam, Germany, Japan.
+			</p>
 		</div>
 	</div>
 
-	<div class="parcel-map">
-		<p class="parcel-label">Where they bought parcels</p>
-		<img
-			bind:this={units}
-			src={`${base}/images/parcel-clusters/units-filled-white.svg`}
-			alt=""
-			style="fill: white"
-			class="layer"
-		/>
-		<img
-			bind:this={nycParcels}
-			src={`${base}/images/parcel-clusters/nyc.svg`}
-			alt=""
-			class="layer"
-		/>
-		<img
-			bind:this={chicagoParcels}
-			src={`${base}/images/parcel-clusters/chicago.svg`}
-			alt=""
-			class="layer"
-		/>
-		<img
-			bind:this={clevelandParcels}
-			src={`${base}/images/parcel-clusters/cleveland.svg`}
-			alt=""
-			class="layer"
-		/>
-		<img
-			bind:this={seattleParcels}
-			src={`${base}/images/parcel-clusters/seattle.svg`}
-			alt=""
-			class="layer"
-		/>
-		<img
-			bind:this={portlandParcels}
-			src={`${base}/images/parcel-clusters/portland.svg`}
-			alt=""
-			class="layer"
-		/>
-		<img
-			bind:this={phoenixParcels}
-			src={`${base}/images/parcel-clusters/phoenix.svg`}
-			alt=""
-			class="layer"
-		/>
-		<img
-			bind:this={minneapolisParcels}
-			src={`${base}/images/parcel-clusters/minneapolis.svg`}
-			alt=""
-			class="layer"
-		/>
-		<img
-			bind:this={birminghamParcels}
-			src={`${base}/images/parcel-clusters/birmingham.svg`}
-			alt=""
-			class="layer"
-		/>
-		<img
-			bind:this={stlouisParcels}
-			src={`${base}/images/parcel-clusters/stlouis.svg`}
-			alt=""
-			class="layer"
-		/>
-		<img
-			bind:this={lasvegasParcels}
-			src={`${base}/images/parcel-clusters/lasvegas.svg`}
-			alt=""
-			class="layer"
-		/>
-		<img
-			bind:this={otherParcels}
-			src={`${base}/images/parcel-clusters/other.png`}
-			alt=""
-			class="layer"
-		/>
+	<!-- <p class="city-headline">
+		{#each cities as city, i (city.id)}
+			<span style="color: {city.color}" bind:this={headlines[i]}>{city.name}</span>
+		{/each}
+	</p> -->
+
+	<div class="cell parcel-cell" bind:this={parcelCell}>
+		<p class="map-label map-label-parcel">Where they bought parcels</p>
+
+		<div class="frame parcel-frame">
+			<img
+				bind:this={units}
+				src={`${base}/images/parcel-clusters/units-filled-white.svg`}
+				alt=""
+				class="layer"
+			/>
+
+			{#each cities as city, i (city.id)}
+				<img
+					src={`${base}/images/parcel-clusters/${city.id}.svg`}
+					alt=""
+					class="layer"
+					bind:this={parcelLayers[i]}
+				/>
+			{/each}
+
+			<!-- <img
+				src={`${base}/images/parcel-clusters/other.png`}
+				alt=""
+				class="layer"
+				bind:this={otherParcels}
+			/> -->
+
+			<img
+				src={`${base}/images/parcel-clusters/international.svg`}
+				alt=""
+				class="layer"
+				bind:this={internationalParcels}
+			/>
+		</div>
 	</div>
 </div>
 
 <style>
 	.wrapper {
+		--ratio-owner: 1.4808;
+		--ratio-parcel: 1.25;
+
 		position: relative;
 		width: 100%;
 		height: 100vh;
 		height: 100lvh;
-		display: flex;
-		flex-direction: column;
 		overflow: hidden;
+		box-sizing: border-box;
+		/* padding: clamp(0.5rem, 2vh, 1.25rem); */
+		/* gap: clamp(0.5rem, 2vh, 1.25rem); */
+		font-family: 'Epilogue', sans-serif;
+		display: grid;
+		align-content: center;
+		grid-template:
+			'subhead' auto
+			'owner' 1fr
+			'parcel' 1fr / minmax(0, 1fr);
 	}
 
-	.owner-section {
+	.cell {
 		position: relative;
-		display: flex;
-		flex: 1;
-		flex-direction: row;
-		justify-content: center;
-		align-items: center;
-		padding: 0 0.75rem;
-		gap: 2rem;
+		container-type: size;
+		display: grid;
+		place-items: center;
+		min-width: 0;
+		min-height: 0;
+		/* border: 1px solid red; */
 	}
 
-	.owner-map {
-		position: relative;
-		/* flex: 0 0 auto; */
-		/* margin: 0 auto; */
-		/* top: 20px;
-        right: 20px; */
-		width: clamp(280px, 50vw, 600px);
-		/* height: clamp(280px, 30dvh, 600px); */
-		aspect-ratio: 3554/2400;
-		/* padding: 0 2rem; */
-		/* z-index: 2; */
-		/* border-radius: 8px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-        background: white;
-		border: 0.25px solid grey; */
+	.owner-cell {
+		grid-area: owner;
+	}
+	.parcel-cell {
+		grid-area: parcel;
+		background-color: #ece9e8;
 	}
 
-	.caption-box {
+	.frame {
 		position: relative;
-		/* flex: 0 0 auto; */
-		/* top: 20px;
-		left: 20px; */
-		/* width: clamp(240px, 30vw, 450px); */
-		/* z-index: 3; */
-		/* text-align: center; */
-		/* border: 0.25px solid grey; */
-		font-family: "Epilogue", sans-serif;
-		font-size: 1rem;
+		container-type: inline-size;
+		/* border: 1px solid green; */
+	}
+
+	.owner-frame {
+		aspect-ratio: var(--ratio-owner);
+		width: min(100cqw, 100cqh * var(--ratio-owner));
+	}
+
+	.parcel-frame {
+		aspect-ratio: var(--ratio-parcel);
+		width: min(100cqw, 100cqh * var(--ratio-parcel));
+		/* background-color: #ece9e8; */
+	}
+
+	.subhead-box {
+		grid-area: subhead;
+		position: relative;
+		min-height: 3rem;
+		margin: 1rem 0;
+	}
+
+	.subhead {
+		position: absolute;
+		/* top: 50%; */
+		/* left: 50%;
+		transform: translate(-50%, -50%); */
+		inset: 0;
+		/* padding: 2rem 0; */
+		font-size: clamp(1rem, 2vh, 1.5rem);
 		font-weight: 300;
-		line-height: 1.3;
-	}
-
-	.caption {
-		/* font-family: "Host Grotesk", sans-serif;
-		font-size: 1rem;
-		font-weight: 300;
-		line-height: 1.3; */
+		line-height: 1.35;
+		text-align: center;
+		text-wrap: balance;
 		opacity: 0;
 	}
 
-	.parcel-map {
-		flex: 2;
-		position: relative;
-		background-color: #ece9e8;
+	.international-note {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		width: 65cqw;
+		font-family: 'Host Grotesk', sans-serif;
+		font-size: clamp(0.9rem, 2cqw, 1.5rem);
+		font-weight: 300;
+		line-height: 1.4;
+		text-align: center;
+		text-wrap: balance;
+		opacity: 0;
+		z-index: 3;
 	}
+
+	.city-label {
+		position: absolute;
+		transform: translate(0.5em, -50%);
+		font-family: 'Host Grotesk', sans-serif;
+		font-size: clamp(0.75rem, 2cqw, 1.5rem);
+		font-weight: 500;
+		white-space: nowrap;
+		opacity: 0;
+		z-index: 2;
+		paint-order: stroke fill;
+		-webkit-text-stroke: 3px rgba(255, 255, 255, 0.85);
+	}
+	.city-label.anchor-right {
+		transform: translate(calc(-100% - 0.5em), -50%);
+	}
+
+	.city-dot {
+		position: absolute;
+		width: 2px;
+		height: 7px;
+		/* border-radius: 50%; */
+		background: #1a1a1a;
+		transform: translate(-50%, -50%);
+		opacity: 0;
+		z-index: 3;
+		box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.9);
+	}
+
+	
+	/* .city-headline {
+		display: none;
+	} */
 
 	.layer {
 		position: absolute;
@@ -333,40 +355,81 @@
 		height: 100%;
 		object-fit: contain;
 		opacity: 0;
+		/* border: 1px solid green; */
 	}
 
-	.owner-label {
+	.map-label {
 		position: absolute;
-		font-size: 0.8rem;
-		bottom: 0.5rem;
-		right: 0.5rem;
-	}
-
-	.parcel-label {
-		position: absolute;
-		font-size: 0.8rem;
 		top: 0.5rem;
 		right: 0.5rem;
+		font-weight: 300;
+		font-style: italic;
+		font-size: clamp(0.7rem, 1.4vh, 0.85rem);
+		z-index: 3;
 	}
 
 	@media (min-aspect-ratio: 1/1) {
 		.wrapper {
-			flex-direction: row;
+			grid-template:
+				'subhead subhead' auto
+				'owner  parcel' 1fr / minmax(0, 1.4808fr) minmax(0, 1.25fr);
 		}
-		.owner-section {
-			flex-direction: column;
-		}
-		.owner-label {
-			bottom: auto;
-			left: auto;
+		.map-label-owner {
+			position: absolute;
 			top: 1rem;
 			right: 1rem;
+			font-size: clamp(0.7rem, 1.4vh, 0.85rem);
+			z-index: 3;
 		}
-		.parcel-label {
-			bottom: auto;
-			left: 1rem;
+		.map-label-parcel {
+			position: absolute;
 			top: 1rem;
-			right: auto;
+			left: 1rem;
+			font-size: clamp(0.7rem, 1.4vh, 0.85rem);
+			z-index: 3;
+		}
+	}
+
+	@media (max-width: 520px) {
+		.wrapper {
+			grid-template:
+				'subhead' auto
+				/* 'headline' auto */
+				'owner' 1fr
+				'parcel' 1fr / minmax(0, 1fr);
+		}
+		.map-label {
+			position: absolute;
+			top: 0.5rem;
+			left: 0.5rem;
+			font-size: clamp(0.7rem, 1.4vh, 0.85rem);
+			z-index: 3;
+		}
+		/* .city-label { display: none; } */
+		/* .city-headline {
+			grid-area: headline;
+			position: relative;
+			display: block;
+			margin: 0;
+			height: 1.6em;
+			font-family: 'Host Grotesk', sans-serif;
+			font-size: 1.15rem;
+			font-weight: 600;
+			line-height: 1.6;
+			text-align: center;
+		}
+		.city-headline span {
+			position: absolute;
+			inset: 0;
+			opacity: 0;
+			white-space: nowrap;
+		} */
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.layer,
+		.city-label {
+			opacity: 1;
 		}
 	}
 </style>

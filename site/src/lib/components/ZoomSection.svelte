@@ -1,54 +1,14 @@
 <script>
 	import { base } from '$app/paths';
+	import { onMount } from 'svelte';
+	import { gsap } from 'gsap';
+	import { ScrollTrigger } from 'gsap/ScrollTrigger';
+	gsap.registerPlugin(ScrollTrigger);
+	ScrollTrigger.config({ ignoreMobileResize: true });
 
-	let items = [
-		{
-			title: 'New York City',
-			lots: 'Horizon City Estates, lots 27-33',
-			image: `${base}/images/zooms/nyc-west2.png`
-		},
-		{
-			title: 'Chicago',
-			lots: 'Horizon City Estates, lot 73',
-			image: `${base}/images/zooms/chicago-west2.png`
-		},
-		{
-			title: 'Phoenix',
-			lots: 'Horizon City Estates, lot 68',
-			image: `${base}/images/zooms/phoenix-transparent.png`
-		},
-		{
-			title: 'Cleveland',
-			lots: 'Shadow Ridge, lots 8-14',
-			image: `${base}/images/zooms/cleveland.png`
-		},
-		{
-			title: 'Germany',
-			lots: 'Shadow Ridge, lots 3, 6, 15, 17, 34',
-			image: `${base}/images/zooms/germany.png`
-		},
-		{
-			title: 'Portland',
-			lots: 'Horizon City Estates, lot 59',
-			image: `${base}/images/zooms/portland.png`
-		},
-		{
-			title: 'Birmingham',
-			lots: 'Horizon City Estates, lot 55',
-			image: `${base}/images/zooms/birmingham.png`
-		},
-		{ title: 'Seattle', image: `${base}/images/zooms/seattle.png` },
-		{
-			title: 'Minneapolis',
-			lots: 'Horizon City, lots 81, 82',
-			image: `${base}/images/zooms/minneapolis.png`
-		},
-		{
-			title: 'Canada',
-			lots: 'Mountain Vista, lots 5, 6',
-			image: `${base}/images/zooms/canada2.png`
-		}
-	];
+	let pinnedWrapper;
+	let subdivision;
+	let shadowRidgeBeat, mountainVistaBeat, horizonCityEstatesBeat;
 
 	let shadowRidge = [
 		{
@@ -105,24 +65,36 @@
 		}
 	];
 
-	// let activeId = $state(horizonCityEstates[null].id);
+		onMount(() => {
+		const tl = gsap.timeline({
+			scrollTrigger: {
+				trigger: pinnedWrapper,
+				start: 'top top',
+				end: '+=3000',
+				pin: true,
+				scrub: 1,
+				anticipatePin: 1,
+				invalidateOnRefresh: true
+			}
+		});
 
-	// let activeItem = $derived(items.find((item) => item.id === activeId));
+		tl.to(subdivision, { opacity: 1 }, 6)
+	});
 
 </script>
 
-<div class="wrapper">
+<div class="wrapper" bind:this={pinnedWrapper}>
 
-	<div class="sticky-header">
-		<h2>A city of cities</h2>
-		<!-- <hr class="full-bleed-line"> -->
+	<h2>Artificial enclaves</h2>
+		
+	<div class="intro">
+		<p>Why the clustering?</p>
+		<p>Sales reps were given a limited batch of inventory to sell at a time. Horizon had sales offices across the U.S. and abroad, and a rep's territory might influence who had access to which lots.</p>
+		<p>A rep might open an envelope at a dinner party — "these are tonight's lots!" — and warn attendees that they could be gone by morning.</p>
+		<p>
+			Zoom into a single subdivision, and the .
+		</p>
 	</div>
-	<p>
-		Of the roughly 39,000 people who bought parcels, only 11% resided within 100 miles of Horizon City at the time. A full 80% of owners lived at least 500 miles away—not exactly "locals".
-	<br><br>
-		Mini-neighborhoods, like New New York or Mini-Minneapolis, Whether because door-to-door salesmen sold one lot at a time, regional preferences, or people
-		knowing others who bought nearby,
-	</p>
 	<!-- <div class="image-grid">
 		{#each items as item (item.title)}
 			<figure class="image">
@@ -135,77 +107,69 @@
 			</figure>
 		{/each}
 	</div> -->
-	<div class="subdivision">
-		<h3>Shadow Ridge subdivision</h3>
-		<img
-			class="legend"
-			src={`${base}/images/zooms/shadow-ridge.png`}
-			alt="Location of Shadow Ridge subdivision"
-		/>
-		<div class="image-grid">
-			{#each shadowRidge as item (item.title)}
-				<figure class="shadow-ridge">
-					<p class="city">{item.title}</p>
-					<p class="lots">{item.lots}</p>
-					<img src={item.image} alt={`Map showing parcels owned by residents of ${item.title}`} />
-				</figure>
-			{/each}
-		</div>
-	</div>
+	<div class="subdivision" bind:this={subdivision}>
 
-	<div class="subdivision">
-		<h3>Mountain Vista subdivision</h3>
-		<div class="image-grid">
-		<img
-			class="legend"
-			src={`${base}/images/zooms/mountain-vista.png`}
-			alt="Location of Mountain Vista subdivision"
-		/>
-		
-			{#each mountainVista as item (item.title)}
-				<figure class="mountain-vista">
-					<p class="city">{item.title}</p>
-					<p class="lots">{item.lots}</p>
-					<img src={item.image} alt={`Map showing parcels owned by residents of ${item.title}`} />
-				</figure>
-			{/each}
+		<div class="shadow-ridge" bind:this={shadowRidgeBeat}>
+			<h3>Shadow Ridge subdivision</h3>
+			<img
+				class="legend"
+				src={`${base}/images/zooms/shadow-ridge.png`}
+				alt="Location of Shadow Ridge subdivision"
+			/>
+			<img
+				class="legend"
+				src={`${base}/images/zooms/subdivision-enclaves-background_shadow-ridge.png`}
+				alt="Enclaves in Shadow Ridge"
+			/>
+			<!-- <div class="image-grid">
+				{#each shadowRidge as item (item.title)}
+					<figure class="shadow-ridge">
+						<p class="city">{item.title}</p>
+						<p class="lots">{item.lots}</p>
+						<img src={item.image} alt={`Map showing parcels owned by residents of ${item.title}`} />
+					</figure>
+				{/each}
+			</div> -->
 		</div>
-	</div>
+	
+		<div class="mountain-vista" bind:this={mountainVistaBeat}>
+			<h3>Mountain Vista subdivision</h3>
+			<div class="image-grid">
+			<img
+				class="legend"
+				src={`${base}/images/zooms/mountain-vista.png`}
+				alt="Location of Mountain Vista subdivision"
+			/>
+			<img
+				class="legend"
+				src={`${base}/images/zooms/subdivision-enclaves-background_mountain-vista.png`}
+				alt="Enclaves in Mountain Vista"
+			/>
+			
+				<!-- {#each mountainVista as item (item.title)}
+					<figure class="mountain-vista">
+						<p class="city">{item.title}</p>
+						<p class="lots">{item.lots}</p>
+						<img src={item.image} alt={`Map showing parcels owned by residents of ${item.title}`} />
+					</figure>
+				{/each} -->
+			</div>
+		</div>
 
-	<!-- TODO: horizon city estates overlay... -->
-	<div class="subdivision">
-		<h3>Horizon City Estates subdivision</h3>
-		<img
-			class="legend"
-			src={`${base}/images/zooms/horizon-city-estates.png`}
-			alt="Location of Horizon City Estates subdivision"
-		/>
-		<!-- <div class="city-buttons">
-			{#each horizonCityEstates as item (item.id)}
-				<button
-					class="city-button"
-					class:active={item.id === activeId}
-					onclick={() => (activeId = item.id)}
-				>
-				{item.title}
-				</button>
-			{/each}
+		<div class="horizon-city-estates" bind:this={horizonCityEstatesBeat}>
+			<h3>Horizon City Estates subdivision</h3>
+			<img
+				class="legend"
+				src={`${base}/images/zooms/horizon-city-estates.png`}
+				alt="Location of Horizon City Estates subdivision"
+			/>
+			<img
+					class="legend"
+					src={`${base}/images/zooms/subdivision-enclaves-background_horizon-city-estates.png`}
+					alt="Enclaves in Horizon City Estates"
+				/>
 		</div>
-		<div class="image-box">
-			{#if activeItem}
-				<img src={activeItem.image} alt={`Map showing parcels owned by residents of ${activeItem.title}`} />
-			{/if}
-		</div> -->
 	</div>
-	<div class="image-grid">
-			{#each horizonCityEstates as item (item.title)}
-				<figure class="horizon-city-estates">
-					<p class="city">{item.title}</p>
-					<p class="lots">{item.lots}</p>
-					<img src={item.image} alt={`Map showing parcels owned by residents of ${item.title}`} />
-				</figure>
-			{/each}
-		</div>
 </div>
 
 <style>
@@ -215,7 +179,7 @@
 		grid-template-columns: 1fr min(42rem, calc(100% - var(--viewport-padding) * 2)) 1fr;
 		gap: 0 var(--viewport-padding);
 		padding: 20px 0;
-		background-color: #ece9e8;
+		background-color: #ca6e56;
 	}
 
 	.wrapper > * {
@@ -259,7 +223,7 @@
 	p {
 		font-family: 'Host Grotesk', 'Epilogue', sans-serif;
 		font-weight: 300;
-		/* padding-top: 1rem; */
+		padding-top: 1rem;
 	}
 
 	.city {
@@ -274,6 +238,7 @@
 
 	.subdivision {
 		padding: 20px 0;
+		opacity: 0;
 	}
 
 	.image-grid {
@@ -316,21 +281,17 @@
 		border: 1px solid black;
 	}
 
-	.mountain-vista img {
-		width: 80px;
-	}
-
 	.shadow-ridge img {
 		width: 250px;
 	}
 
-	.horizon-city-estates img {
-		width: 250px;
+
+	.mountain-vista img {
+		width: 80px;
 	}
 
-	.text {
-		max-width: 1000px;
-		text-align: center;
-		padding: 20px 0;
+	
+	.horizon-city-estates img {
+		width: 250px;
 	}
 </style>
