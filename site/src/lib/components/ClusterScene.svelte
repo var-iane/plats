@@ -229,7 +229,7 @@
 		width: 100%;
 		height: 100vh;
 		height: 100lvh;
-		overflow: visible;
+		overflow: hidden;
 		box-sizing: border-box;
 		/* padding: clamp(0.5rem, 2vh, 1.25rem); */
 		/* gap: clamp(0.5rem, 2vh, 1.25rem); */
