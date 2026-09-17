@@ -156,10 +156,10 @@
 				It bulldozed an entire network of streets and cul-de-sacs into the desert scrub.
 			</p>
 			<p class="caption" bind:this={cap6}>
-				Door-to-door sales reps, dinner parties, and glossy promos pitched Horizon City as a wise investment: a chance to own profitable land in the booming Southwest.
+				Door-to-door sales reps and glossy ads pitched Horizon City as a wise investment: a chance to own profitable land in the booming Southwest.
 			</p>
 			<p class="caption" bind:this={cap7}>
-				The company targeted buyers who lived too far away to see for themselves.
+				They targeted buyers who lived too far away to see for themselves.
 			</p>
 			<p class="caption" bind:this={cap8}>Over 100,000 parcels were sold.</p>
 		 </div>

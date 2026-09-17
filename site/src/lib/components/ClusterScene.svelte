@@ -228,7 +228,7 @@
 		position: relative;
 		width: 100%;
 		height: 100vh;
-		height: 100lvh;
+		height: 100dvh;
 		overflow: hidden;
 		box-sizing: border-box;
 		/* padding: clamp(0.5rem, 2vh, 1.25rem); */
