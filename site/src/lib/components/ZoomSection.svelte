@@ -29,7 +29,7 @@
 			lots: 'Lots 4, 7',
 			image: `${base}/images/zooms/mountain-vista-lasvegas.png`
 		},
-		{ title: 'Canada', lots: 'Lots 5, 6', image: `${base}/images/zooms/mountain-vista-canada.png` },
+		{ title: 'Canada', lots: 'Lots 5, 6', image: `${base}/images/zooms/mountain-vista-canada.png` }
 	];
 
 	let horizonCityEstates = [
@@ -65,12 +65,12 @@
 		}
 	];
 
-		onMount(() => {
+	onMount(() => {
 		const tl = gsap.timeline({
 			scrollTrigger: {
 				trigger: pinnedWrapper,
 				start: 'top top',
-				end: '+=3000',
+				end: '+=1000',
 				pin: true,
 				scrub: 1,
 				anticipatePin: 1,
@@ -78,23 +78,30 @@
 			}
 		});
 
-		tl.to(subdivision, { opacity: 1 }, 6)
+		tl.to(subdivision, { opacity: 1 }, 6);
 	});
-
 </script>
 
 <div class="wrapper" bind:this={pinnedWrapper}>
-
-	<h2>Artificial enclaves</h2>
-		
+	
 	<div class="intro">
+		<h2>Artificial enclaves</h2>
 		<p>Why the clustering?</p>
-		<p>Sales reps were given a limited batch of inventory to sell at a time — say, specific blocks within a specific unit of a subdivision. Horizon had sales offices across the U.S. and abroad, and a rep's territory might influence who had access to which lots.</p>
-		<p>A rep might open an envelope at a dinner party — "these are tonight's lots!" — and warn attendees that they could be gone by morning.</p>
 		<p>
-			Zoom into a single subdivision, and the .
+			Sales reps were given a limited batch of inventory to sell at a time — say, certain blocks
+			within a specific unit of a subdivision. Horizon had sales offices across the U.S. and abroad,
+			and a rep's territory influenced who could buy where.
+		</p>
+		<p>
+			At sales dinner parties, reps were known to open envelopes revealing that night's lots and
+			warn attendees that they could be gone by morning.
+		</p>
+		<p>
+			These tactics likely produced the artificial enclaves, like a mini-Minneapolis or New New
+			York, visible in the ownership data.
 		</p>
 	</div>
+
 	<!-- <div class="image-grid">
 		{#each items as item (item.title)}
 			<figure class="image">
@@ -107,107 +114,97 @@
 			</figure>
 		{/each}
 	</div> -->
-	<div class="subdivision" bind:this={subdivision}>
 
-		<div class="shadow-ridge" bind:this={shadowRidgeBeat}>
-			<h3>Shadow Ridge subdivision</h3>
+	<div class="examples">
+
+		<h3>Shadow Ridge subdivision</h3>
+		<figure class="example shadow-ridge">
 			<img
-				class="legend"
+				class="locator"
 				src={`${base}/images/zooms/shadow-ridge.png`}
 				alt="Location of Shadow Ridge subdivision"
 			/>
+			<div class="zoom-box">
+				<img
+					class="zoom"
+					src={`${base}/images/zooms/subdivision-enclaves_shadow-ridge.png`}
+					alt="Parcels in Shadow Ridge colored by owner residence"
+				/>
+				<div class="key">
+					<p class="chip"><span style="color: #2f8ac4; font-weight: 500;">Cleveland:</span> Lots 8-14</p>
+					<p class="chip"><span style="color: #ff6b5a; font-weight: 500;">North Rhine-Westphalia, Germany:</span> Lots 3, 6, 15, 17, 34</p>
+				</div>
+			</div>
+			
+		</figure>
+
+		<h3>Mountain Vista subdivision</h3>
+		<figure class="example mountain-vista">
 			<img
-				class="legend"
-				src={`${base}/images/zooms/subdivision-enclaves-background_shadow-ridge.png`}
-				alt="Enclaves in Shadow Ridge"
-			/>
-			<!-- <div class="image-grid">
-				{#each shadowRidge as item (item.title)}
-					<figure class="shadow-ridge">
-						<p class="city">{item.title}</p>
-						<p class="lots">{item.lots}</p>
-						<img src={item.image} alt={`Map showing parcels owned by residents of ${item.title}`} />
-					</figure>
-				{/each}
-			</div> -->
-		</div>
-	
-		<div class="mountain-vista" bind:this={mountainVistaBeat}>
-			<h3>Mountain Vista subdivision</h3>
-			<div class="image-grid">
-			<img
-				class="legend"
+				class="locator"
 				src={`${base}/images/zooms/mountain-vista.png`}
 				alt="Location of Mountain Vista subdivision"
 			/>
-			<img
-				class="legend"
-				src={`${base}/images/zooms/subdivision-enclaves-background_mountain-vista.png`}
-				alt="Enclaves in Mountain Vista"
-			/>
-			
-				<!-- {#each mountainVista as item (item.title)}
-					<figure class="mountain-vista">
-						<p class="city">{item.title}</p>
-						<p class="lots">{item.lots}</p>
-						<img src={item.image} alt={`Map showing parcels owned by residents of ${item.title}`} />
-					</figure>
-				{/each} -->
+			<div class="zoom-box">
+				<img
+					class="zoom"
+					src={`${base}/images/zooms/subdivision-enclaves-background_mountain-vista.png`}
+					alt="Parcels in Mountain Vista colored by owner residence"
+				/>
+				<div class="key-wrapper">
+					<div class="key-row"><span style="color: #3a3b78; font-weight: 500;">Las Vegas:</span> Lots 4, 7</div>
+					<div class="key-row"><span style="color: #1ebecf; font-weight: 500;">British Columbia, Canada:</span> Lots 5, 6</div>
+				</div>
 			</div>
-		</div>
+		</figure>
 
-		<div class="horizon-city-estates" bind:this={horizonCityEstatesBeat}>
-			<h3>Horizon City Estates subdivision</h3>
+		<h3>Horizon City Estates subdivision</h3>
+		<figure class="example horizon-city-estates">
 			<img
-				class="legend"
+				class="locator"
 				src={`${base}/images/zooms/horizon-city-estates.png`}
 				alt="Location of Horizon City Estates subdivision"
 			/>
-			<img
-					class="legend"
+			<div class="zoom-box">
+				<img
+					class="zoom"
 					src={`${base}/images/zooms/subdivision-enclaves-background_horizon-city-estates.png`}
-					alt="Enclaves in Horizon City Estates"
+					alt="Parcels in Horizon City Estates colored by owner residence"
 				/>
-		</div>
+				<div class="key">
+					<p class="chip"><span style="color: #d326be; font-weight: 500;">Birmingham:</span> Lot 55</p>
+					<p class="chip"><span style="color: #9966cc; font-weight: 500;">Portland:</span> Lot 59</p>
+					<p class="chip"><span style="color: #e73f74; font-weight: 500;">Chicago:</span> Lot 73</p>
+					<p class="chip"><span style="color: #94a800; font-weight: 500;">Phoenix:</span> Lot 68</p>
+					<p class="chip"><span style="color: #ffa600; font-weight: 500;">New York City:</span> Lots 27-33</p>
+				</div>
+			</div>
+		</figure>
 	</div>
 </div>
 
 <style>
 	.wrapper {
-		--viewport-padding: 16px;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		background-color: #ca6e56;
+		/* --viewport-padding: 16px;
 		display: grid;
 		grid-template-columns: 1fr min(42rem, calc(100% - var(--viewport-padding) * 2)) 1fr;
 		gap: 0 var(--viewport-padding);
 		padding: 20px 0;
-		background-color: #ca6e56;
+		background-color: #ca6e56; */
 	}
 
 	.wrapper > * {
-		grid-column: 2;
+		/* grid-column: 2; */
 	}
 
 	.full-bleed {
 		width: 100%;
 		grid-column: 1 / -1;
 	}
-
-	/* .full-bleed-line {
-		width: 100vw;
-		position: relative;
-		left: 50%;
-		transform: translateX(-50%);
-		border: none;
-		border-top: 0.5px solid black;
-		margin: 1rem 0 0 0;
-	} */
-
-	/* .sticky-header {
-		position: sticky;
-		top: 0;
-		z-index: 2;
-		background-color: inherit;
-		padding: 1rem 0 0 0;
-	} */
 
 	h2 {
 		font-family: 'Epilogue', sans-serif;
@@ -223,28 +220,28 @@
 	p {
 		font-family: 'Host Grotesk', 'Epilogue', sans-serif;
 		font-weight: 300;
+	}
+
+	.intro p {
 		padding-top: 1rem;
 	}
 
-	.city {
-		font-size: 0.9rem;
-		font-weight: 400;
+	.intro {
+		max-width: 42rem;
 	}
 
-	.lots {
-		font-size: 0.8rem;
-		font-weight: 300;
+	.examples {
+		--scale: 0.613; /* to make widest image fit max column width */
+
+		max-width: 63rem;
+		margin: 0 auto;
+		padding: 20px 0px;
 	}
 
-	.subdivision {
-		padding: 20px 0;
-		opacity: 0;
-	}
-
-	.image-grid {
+	.example {
 		/* display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr));
-        gap: 1rem 0.2rem;
+		grid-template-columns: 1fr 1fr;
+		gap: 1rem 0.2rem;
 		padding: 20px 0; */
 		display: flex;
 		gap: 1rem;
@@ -252,46 +249,91 @@
 		flex-wrap: wrap;
 	}
 
-	.image {
-		display: flex;
-		align-items: flex-start;
-		/* flex-direction: column; */
-		/* gap: 0.5rem; */
+	.shadow-ridge img.zoom {
+		width: calc(495px * var(--scale));
+	}
+	.mountain-vista img.zoom {
+		width: calc(173px * var(--scale));
+	}
+	.horizon-city-estates img.zoom {
+		width: calc(1094px * var(--scale));
 	}
 
-	.image img {
-		height: 300px;
-		width: auto;
-		/* width: 50%;
-		height: auto; */
-		/* aspect-ratio: 1 / 1; */
-		/* object-fit: cover; */
-		max-width: 100%;
-		border: 1px solid black;
-		background-color: #ffffff;
-	}
-
-	.legend {
+	.locator {
 		width: 100%;
 		min-width: 300px;
 		max-width: 450px;
+		border: 1px solid black;
+		display: block;
+		margin-bottom: 1rem;
 	}
 
-	img {
+	.zoom-box {
+		/* position: relative; */
+		display: flex;
+		/* min-width: 300px;
+		max-width: 350px; */
+		background-color: #eee9e8;
 		border: 1px solid black;
 	}
 
-	.shadow-ridge img {
-		width: 250px;
+	.zoom {
+		/* height: auto;
+		display: block;
+		max-width: 100%; */
+		/* border: 1px solid black; */
 	}
 
-
-	.mountain-vista img {
-		width: 80px;
+	.key { 
+		position: absolute;
+		top: 0.5rem;
+		right: 0.5rem;
+		display: flex;
+		flex-wrap: wrap;
+		
 	}
 
-	
-	.horizon-city-estates img {
-		width: 250px;
+	.key-wrapper {
+		position: absolute;
+		top: 20%;
+		left: 10%;
+		z-index: 2;
+		opacity: 0;
+		border: 1px solid purple;
+	}
+
+	.key-row {
+		display: flex;
+		align-items: center;
+		padding: 2px 0px;
+		/* opacity: 0; */
+	}
+
+	.key-label {
+		text-transform: uppercase;
+		width: 120px;
+		white-space: nowrap;
+		font-size: 0.8rem;
+	}
+
+	.chip {
+		font-family: 'Host Grotesk', sans-serif;
+		font-size: 1rem;
+		font-weight: 500;
+		white-space: nowrap;
+		gap: 1rem;
+		/* display: inline-block;
+		width: 0.75rem;
+		height: 0.75rem;
+		margin-right: 0.5rem;
+		border: 1px solid rgba(0, 0, 0, 0.3);
+		vertical-align: baseline;
+		flex-shrink: 0; */
+	}
+
+	@media (max-width: 720px) {
+		.examples {
+			--scale: 0.45;
+		}
 	}
 </style>

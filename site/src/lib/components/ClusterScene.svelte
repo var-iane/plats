@@ -234,6 +234,7 @@
 		/* padding: clamp(0.5rem, 2vh, 1.25rem); */
 		/* gap: clamp(0.5rem, 2vh, 1.25rem); */
 		font-family: 'Epilogue', sans-serif;
+		
 		display: grid;
 		align-content: start;
 		grid-template:

@@ -156,26 +156,15 @@
 				It bulldozed an entire network of streets and cul-de-sacs into the desert scrub.
 			</p>
 			<p class="caption" bind:this={cap6}>
-				Door-to-door sales reps and glossy ads pitched Horizon City as a wise investment: a chance to own profitable land in the booming Southwest.
+				Glossy ads pitched Horizon City as a wise investment: a chance to own profitable land in the booming Southwest.
 			</p>
 			<p class="caption" bind:this={cap7}>
-				They targeted buyers who lived too far away to see for themselves.
+				Sales reps went door-to-door and hosted dinner parties, targeting buyers who lived too far away to see for themselves.
 			</p>
 			<p class="caption" bind:this={cap8}>Over 100,000 parcels were sold.</p>
 		 </div>
 	<!-- <h1 bind:this={title}>Phantom Plats</h1> -->
 	</div>
-	<!-- <div class="outro" bind:this={outro}>
-		<p>
-			Horizon Corporation's sales reps went door-to-door and hosted dinner parties around the country and the world.
-		</p>
-		<p>
-			They showed potential buyers official-looking plat maps of lots tucked in cul-de-sacs, near planned schools and shopping centers. Promotional films and mail-order brochures showed lush lawns, golf courses, and thriving communities.
-		</p>
-		<p>
-			The company targeted those who lived too far to see what was obvious: This was raw desert.
-		</p>
-	</div> -->
 </div>
 
 <style>
@@ -234,17 +223,13 @@
 		position: absolute;
 		top: 0;
 		left: 0;
-		/* left: 50%;
-        transform: translate(-50%); */
 		width: clamp(200px, 70dvw, 450px);
 		font-family: 'Epilogue', 'Host Grotesk', serif;
 		font-weight: 300;
 		line-height: 1.3;
 		text-align: center;
+		text-wrap: balance;
 		padding: 6px;
-		/* background-color: #ffffff; */
-		/* border: 1px solid black; */
-		border-radius: 8px;
 		z-index: 3;
 		opacity: 0;
 		/* border: 1px solid green; */
@@ -270,9 +255,6 @@
 		left: 50%;
 		transform: translate(-50%, -50%);
 		width: clamp(300px, 70dvw, 800px);
-		/* display: flex;
-		flex-direction: column;
-		align-items: center; */
 		font-family: 'Host Grotesk', sans-serif;
 		font-weight: 300;
 		font-size: 1rem;
