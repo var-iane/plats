@@ -71,7 +71,10 @@
 		// tl.to(keyWrapper, { opacity: 1, duration: 0.25 }, 3)
 		// 	.to(keyWrapper, { opacity: 0, duration: 0.1 }, 5)
 
-		return () => tl.scrollTrigger.kill();
+		return () => { 
+			tl.scrollTrigger.kill();
+			tl.kill();
+		}
 	});
 </script>
 

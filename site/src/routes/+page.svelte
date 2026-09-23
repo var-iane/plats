@@ -6,10 +6,10 @@
 </script>
 
 
-<!-- <OpeningScene /> -->
+<OpeningScene />
 
-<!-- <ClusterScene /> -->
+<ClusterScene />
 
 <ZoomSection />
 
-<!-- <RevealScene /> -->
+<RevealScene />

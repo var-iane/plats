@@ -83,7 +83,10 @@
 			// .add('outroIn', 'contentRises+=13')
 			// .to(outro, { opacity: 1, duration: 3 }, 'outroIn')
 		
-		return () => tl.scrollTrigger.kill();
+		return () => { 
+			tl.scrollTrigger.kill();
+			tl.kill();
+		}
 	});
 </script>
 
@@ -226,24 +229,6 @@
 		font-weight: 300;
 		font-size: 1.5rem;
 		text-align: center;
-	}
-
-	.outro {
-		position: absolute;
-		inset: 0;
-		top: 50%;
-		left: 50%;
-		transform: translate(-50%, -50%);
-		width: clamp(300px, 70dvw, 800px);
-		font-family: 'Host Grotesk', sans-serif;
-		font-weight: 300;
-		font-size: 1rem;
-		opacity: 0;
-		z-index: 4;
-	}
-
-	.outro p {
-		margin-block: 1.5rem;
 	}
 
 	h1 {

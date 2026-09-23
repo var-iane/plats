@@ -120,10 +120,10 @@
 <div class="wrapper" bind:this={pinnedWrapper}>
 	<div class="subhead-box">
 		<p class="subhead" bind:this={subhead1}>
-			80% of buyers lived <span style="color: #ca6e56">at least 500 miles away</span>.
+			80% of buyers lived <span style="color: #ca6e56; font-weight: 500">at least 500 miles away</span>.
 		</p>
 		<p class="subhead" bind:this={subhead2}>
-			Buyers in different places were sold different inventory.
+			Buyers in <span style="font-weight: 500">different places</span> were sold <span style="font-weight: 500">different inventory</span>.
 		</p>
 	</div>
 
@@ -171,7 +171,7 @@
 			{/each}
 
 			<p class="international-note" bind:this={internationalNote}>
-				<span style="color: #ff6b5a; font-weight: 600;">All around the world</span>: military
+				<span style="color: #ff6b5a; font-weight: 600;">Even all around the world</span>: buyers were military
 				members stationed overseas, residents of Guam, Germany, Japan.
 			</p>
 		</div>
@@ -307,7 +307,7 @@
 		transform: translate(-50%, -50%);
 		width: 65cqw;
 		font-family: 'Host Grotesk', sans-serif;
-		font-size: clamp(0.9rem, 2cqw, 1.5rem);
+		font-size: clamp(1rem, 2.5cqw, 2rem);
 		font-weight: 300;
 		line-height: 1.4;
 		text-align: center;
