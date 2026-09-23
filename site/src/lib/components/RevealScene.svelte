@@ -29,35 +29,35 @@
 			.to(units, { opacity: 1, duration: 3 }, 'platMapIn')
 			.to(roads, { opacity: 1, duration: 3 }, 'platMapIn')
 			.to(cap1, { opacity: 1, duration: 3 }, 'platMapIn')
-			.add('soldIn', 'platMapIn+=7')
+			.add('soldIn', 'platMapIn+=11')
 			.to(soldParcels, { opacity: 1, duration: 3 }, 'soldIn')
 			.to(cap1, { opacity: 0, duration: 2 }, 'soldIn')
 			.to(cap2, { opacity: 1, duration: 3 }, 'soldIn')
-			.add('waterIn', 'soldIn+=7')
+			.add('waterIn', 'soldIn+=11')
 			.to(water, { opacity: 1, duration: 2 }, 'waterIn')
 			.to(buildings, { opacity: 1, duration: 2 }, 'waterIn')
-			.to(soldParcels, { opacity: 0.2, duration: 2 }, 'waterIn')
+			.to(soldParcels, { opacity: 0.1, duration: 2 }, 'waterIn')
 			.to(cap2, { opacity: 0, duration: 2 }, 'waterIn')
 			.to(cap3, { opacity: 1, duration: 3 }, 'waterIn')
-			.add('unbuiltIn', 'waterIn+=7')
-			.to(unbuiltParcels, { opacity: 1, duration: 2 }, 'unbuiltIn')
+			.add('unbuiltIn', 'waterIn+=20')
+			.to(unbuiltParcels, { opacity: 1, duration: 6 }, 'unbuiltIn')
 			.to(soldParcels, { opacity: 0, duration: 2 }, 'unbuiltIn')
 			.to(water, { opacity: 0, duration: 2 }, 'unbuiltIn')
 			.to(cap3, { opacity: 0, duration: 2 }, 'unbuiltIn')
-			.to(cap4, { opacity: 1, duration: 3 }, 'unbuiltIn')
-			.add('satellitePartIn', 'unbuiltIn+=7')
-			.to(satellite, { opacity: 0.3, duration: 6 }, 'satellitePartIn')
-			.to(unbuiltParcels, { opacity: 0.3, duration: 6 }, 'satellitePartIn')
+			.to(cap4, { opacity: 1, duration: 6 }, 'unbuiltIn')
+			.add('satellitePartIn', 'unbuiltIn+=20')
+			.to(satellite, { opacity: 0.3, duration: 10 }, 'satellitePartIn')
+			.to(unbuiltParcels, { opacity: 0.3, duration: 10 }, 'satellitePartIn')
 			.to(units, { opacity: 0, duration: 2 }, 'satellitePartIn')
 			.to(text, { opacity: 0, duration: 2 }, 'satellitePartIn')
 			.to(roads, { opacity: 0, duration: 6 }, 'satellitePartIn+=2')
 			.to(roadsWhite, { opacity: 1, duration: 6 }, 'satellitePartIn+=2')
-			.add('satelliteFullIn', 'satellitePartIn+=7')
+			.add('satelliteFullIn', 'satellitePartIn+=20')
 			.to(satellite, { opacity: 1, duration: 6 }, 'satelliteFullIn')
 			.to(unbuiltParcels, { opacity: 0, duration: 6 }, 'satelliteFullIn')
 			.to(cap4, { opacity: 0, duration: 2 }, 'satelliteFullIn')
 			.to(cap5, { opacity: 1, duration: 3 }, 'satelliteFullIn')
-			.add('lastBeat', 'satelliteFullIn+=7')
+			.add('lastBeat', 'satelliteFullIn+=11')
 			.to(buildings, { opacity: 0, duration: 6 }, 'lastBeat')
 			.to(roadsWhite, { opacity: 0, duration: 12 }, 'lastBeat')
 			.to(cap5, { opacity: 0, duration: 2 }, 'lastBeat')
@@ -67,9 +67,6 @@
 			// .to(map, { y: '-100vh', duration: 15, ease: 'power1.in' }, 'endTitle+=5')
 			// .fromTo(title, { y: '70vh' }, { y: '-150vh', duration: 15, ease: 'power1.in' }, 'endTitle')
 			.to(codeLink, { opacity: 1, duration: 2 }, 'lastBeat+=20')
-
-		// tl.to(keyWrapper, { opacity: 1, duration: 0.25 }, 3)
-		// 	.to(keyWrapper, { opacity: 0, duration: 0.1 }, 5)
 
 		return () => { 
 			tl.scrollTrigger.kill();
@@ -81,18 +78,18 @@
 <div class="wrapper" bind:this={pinnedWrapper}>
 	<div class="content-container">
 		<div class="caption-box">
-			<p class="caption" bind:this={cap1}>
-				The company's plat maps looked like official development plans. Buyers saw lots tucked in quiet cul-de-sacs, near planned schools and shopping centers, and believed Horizon was building out the whole area.
-			</p>
-			<p class="caption" bind:this={cap2}>
-				36,000 people bought <span style="color: #d68c3f; font-weight: bold;">over 100,000 lots</span>.
-			</p>
-			<p class="caption" bind:this={cap3}>
-				Horizon ultimately developed one small area, around an 18-hole golf course. <span style="color: #01bfc3; font-weight: bold;">Buildings</span> went up only where <span style="color: #3083bd; font-weight: bold;">water</span> was available.
-			</p>
-			<p class="caption" bind:this={cap4}>
-				Utilities and paved roads never reached the rest, and <span style="color: #525263; font-weight: bold;">90,000 lots</span> have never been developed.
-			</p>
+			<div class="caption" bind:this={cap1}>
+				<p>The company's plat maps looked like official development plans.</p><p>Buyers saw lots tucked in quiet cul-de-sacs, near planned schools and shopping centers, and believed Horizon was building out the whole area.</p>
+			</div>
+			<div class="caption" bind:this={cap2}>
+				<p>36,000 people bought <span style="color: #d68c3f; font-weight: bold;">over 100,000 lots</span>.</p>
+			</div>
+			<div class="caption" bind:this={cap3}>
+				<p>Horizon ultimately developed one small area, around an 18-hole golf course.</p><p><span style="color: #01bfc3; font-weight: bold;">Buildings</span> went up only where <span style="color: #3083bd; font-weight: bold;">water</span> was available.</p>
+			</div>
+			<div class="caption" bind:this={cap4}>
+				<p>Utilities and paved roads never reached the rest.</p><p><span style="color: #525263; font-weight: bold;">90,000 lots</span> have never been developed.</p>
+			</div>
 			<p class="caption" bind:this={cap5}>
 				This is Horizon City today.
 			</p>
@@ -128,11 +125,8 @@
 				class="layer"
 			/>
 		
-			<div class="key-wrapper" bind:this={keyWrapper}>
-				<!-- <div class="key-row" bind:this={soldKey}>
-					<div class="key-label">Sold parcels</div>
-					<img src={`${base}/images/fullmap/key/sold-key.svg`} class="key-symbol" alt="" />
-				</div> -->
+			<!-- <div class="key-wrapper" bind:this={keyWrapper}>
+			
 				<div class="key-row" bind:this={waterKey}>
 					<div class="key-label">Water lines</div>
 					<img src={`${base}/images/fullmap/key/water-key.svg`} class="key-line" alt="" />
@@ -145,11 +139,11 @@
 					<div class="key-label">Unbuilt lots</div>
 					<img src={`${base}/images/fullmap/key/unbuilt-key.svg`} class="key-symbol" alt="" />
 				</div>
-			</div>
+			</div> -->
 
 		</div>
 		<!-- <h1 bind:this={title}>Phantom Plats</h1> -->
-		<p class="code-link" bind:this={codeLink}>See the code and methods <a href="https://github.com/var-iane/plats" target="_blank">here</a></p>
+		<p class="code-link" bind:this={codeLink}>See the methods for this project <a href="https://github.com/var-iane/plats" target="_blank">here</a></p>
 	</div>
 </div>
 
@@ -175,6 +169,7 @@
 		width: 100%;
 		height: 90vh;
 		max-width: 100%;
+		gap: 1.5rem;
 		z-index: 0;
 		/* border: 1px solid black; */
 	}
@@ -214,14 +209,12 @@
 		position: absolute;
 		top: 0;
 		left: 0;
-		width: clamp(325px, 70dvw, 750px);
+		width: clamp(325px, 80dvw, 750px);
 		font-family: 'Epilogue', 'Host Grotesk', serif;
 		font-weight: 300;
 		font-size: clamp(1rem, 1.7vh, 1.5rem);
 		line-height: 1.4;
 		text-align: center;
-		text-wrap: balance;
-		padding: 6px;
 		z-index: 3;
 		opacity: 0;
 		/* border: 1px solid green; */
@@ -232,6 +225,10 @@
 		font-size: 0.8rem;
 	}
 
+	p {
+		margin: 0 0 0.25rem 0;
+		text-wrap: balance;
+	}
 
 	.key-wrapper {
 		position: absolute;
