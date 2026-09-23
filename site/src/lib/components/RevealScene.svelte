@@ -217,7 +217,8 @@
 		width: clamp(325px, 70dvw, 750px);
 		font-family: 'Epilogue', 'Host Grotesk', serif;
 		font-weight: 300;
-		line-height: 1.3;
+		font-size: clamp(1rem, 1.7vh, 1.5rem);
+		line-height: 1.4;
 		text-align: center;
 		text-wrap: balance;
 		padding: 6px;

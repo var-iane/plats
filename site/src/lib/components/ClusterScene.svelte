@@ -105,7 +105,11 @@
 			.to({}, { duration: 6 })
 
 			.addLabel('international', 'allOn+=9')
-			.to([usMap, other, ...labels, ...ownerLayers, ...parcelLayers], { opacity: 0, duration: 3 }, 'international')
+			.to(
+				[usMap, other, ...labels, ...ownerLayers, ...parcelLayers],
+				{ opacity: 0, duration: 3 },
+				'international'
+			)
 			.to(internationalParcels, { opacity: 1, duration: 2 }, 'international+=2')
 			.to(internationalNote, { opacity: 1, duration: 2 }, `international+=2`)
 			.to({}, { duration: 10 });
@@ -120,10 +124,13 @@
 <div class="wrapper" bind:this={pinnedWrapper}>
 	<div class="subhead-box">
 		<p class="subhead" bind:this={subhead1}>
-			80% of buyers lived <span style="color: #ca6e56; font-weight: 500">at least 500 miles away</span>.
+			80% of buyers lived <span style="color: #ca6e56; font-weight: 500"
+				>at least 500 miles away</span
+			>.
 		</p>
 		<p class="subhead" bind:this={subhead2}>
-			Buyers in <span style="font-weight: 500">different places</span> were sold <span style="font-weight: 500">different inventory</span>.
+			Buyers in <span style="font-weight: 500">different places</span> were sold
+			<span style="font-weight: 500">different inventory</span>.
 		</p>
 	</div>
 
@@ -171,8 +178,8 @@
 			{/each}
 
 			<p class="international-note" bind:this={internationalNote}>
-				<span style="color: #ff6b5a; font-weight: 600;">Even all around the world</span>: buyers were military
-				members stationed overseas, residents of Guam, Germany, Japan.
+				<span style="color: #ff6b5a; font-weight: 600;">Even all around the world</span>: <br>Buyers
+				were military members stationed overseas, residents of Guam, Germany, Japan.
 			</p>
 		</div>
 	</div>
@@ -234,7 +241,7 @@
 		/* padding: clamp(0.5rem, 2vh, 1.25rem); */
 		/* gap: clamp(0.5rem, 2vh, 1.25rem); */
 		font-family: 'Epilogue', sans-serif;
-		
+
 		display: grid;
 		align-content: start;
 		grid-template:
@@ -287,11 +294,7 @@
 
 	.subhead {
 		position: absolute;
-		/* top: 50%; */
-		/* left: 50%;
-		transform: translate(-50%, -50%); */
 		inset: 0;
-		/* padding: 2rem 0; */
 		font-size: clamp(1rem, 2vh, 1.5rem);
 		font-weight: 300;
 		line-height: 1.35;
@@ -344,7 +347,6 @@
 		box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.9);
 	}
 
-	
 	/* .city-headline {
 		display: none;
 	} */
@@ -365,7 +367,7 @@
 		right: 0.5rem;
 		font-weight: 300;
 		font-style: italic;
-		font-size: clamp(0.7rem, 1.4vh, 0.85rem);
+		font-size: clamp(0.8rem, 1.4vh, 0.9rem);
 		z-index: 3;
 	}
 
@@ -379,14 +381,14 @@
 			position: absolute;
 			top: 1rem;
 			right: 1rem;
-			font-size: clamp(0.7rem, 1.4vh, 0.85rem);
+			font-size: clamp(0.8rem, 1.4vh, 0.9rem);
 			z-index: 3;
 		}
 		.map-label-parcel {
 			position: absolute;
 			top: 1rem;
 			left: 1rem;
-			font-size: clamp(0.7rem, 1.4vh, 0.85rem);
+			font-size: clamp(0.8rem, 1.4vh, 0.9rem);
 			z-index: 3;
 		}
 	}
@@ -403,7 +405,8 @@
 			position: absolute;
 			top: 0.5rem;
 			left: 0.5rem;
-			font-size: clamp(0.7rem, 1.4vh, 0.85rem);
+			max-width: 150px;
+			font-size: clamp(0.8rem, 1.4vh, 0.9rem);
 			z-index: 3;
 		}
 		/* .city-label { display: none; } */

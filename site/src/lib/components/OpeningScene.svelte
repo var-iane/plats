@@ -196,7 +196,7 @@
 
 	.caption-box {
 		position: relative;
-		width: clamp(200px, 70dvw, 450px);
+		width: clamp(325px, 70dvw, 750px);
 		height: 7rem;
 		z-index: 3;
 		/* border: 1px solid blue; */
@@ -206,10 +206,11 @@
 		position: absolute;
 		top: 0;
 		left: 0;
-		width: clamp(200px, 70dvw, 450px);
+		width: clamp(325px, 70dvw, 750px);
 		font-family: 'Epilogue', 'Host Grotesk', serif;
 		font-weight: 300;
-		line-height: 1.3;
+		font-size: clamp(1rem, 1.7vh, 1.5rem);
+		line-height: 1.4;
 		text-align: center;
 		text-wrap: balance;
 		padding: 6px;
@@ -229,6 +230,24 @@
 		font-weight: 300;
 		font-size: 1.5rem;
 		text-align: center;
+	}
+
+	.outro {
+		position: absolute;
+		inset: 0;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		width: clamp(300px, 70dvw, 800px);
+		font-family: 'Host Grotesk', sans-serif;
+		font-weight: 300;
+		font-size: 1rem;
+		opacity: 0;
+		z-index: 4;
+	}
+
+	.outro p {
+		margin-block: 1.5rem;
 	}
 
 	h1 {

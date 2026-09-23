@@ -200,7 +200,7 @@
 	.examples {
 		--scale: 0.613;
 		--map-col: 350px;
-		padding: 2rem 0rem;
+		padding: 3rem 0rem;
 	}
 
 	.example {
