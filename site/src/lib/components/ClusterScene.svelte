@@ -308,7 +308,7 @@
 		top: 50%;
 		left: 50%;
 		transform: translate(-50%, -50%);
-		width: 65cqw;
+		width: 60cqw;
 		font-family: 'Host Grotesk', sans-serif;
 		font-size: clamp(1rem, 2.5cqw, 2rem);
 		font-weight: 300;
