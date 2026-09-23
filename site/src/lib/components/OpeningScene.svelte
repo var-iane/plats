@@ -20,16 +20,11 @@
 	let intro, outro, cap1, cap2, cap3, cap4, cap5, cap6, cap7, cap8;
 
 	onMount(() => {
-		
-		const DEBUG = false;
 
-		const tl = gsap.timeline(
-			DEBUG ? {paused: true} : {
+		const tl = gsap.timeline({
 			scrollTrigger: {
 				trigger: pinnedWrapper,
 				start: 'top top',
-				// endTrigger: 'map',
-				// end: 'bottom top',
 				end: () => '+=' + Math.min(Math.max(window.innerHeight * 8, 5200), 8800),
 				pin: true,
 				scrub: 1.5,
@@ -78,32 +73,17 @@
 			.to(cap7, { opacity: 0, duration: 2 }, 'vintageBeat3')
 			.to(cap8, { opacity: 1, duration: 3 }, 'vintageBeat3')
 			.add('contentRises', 'vintageBeat3+=11')
-			// .to(cap8, { opacity: 0, duration: 3 }, 'contentRises')
-			.to(map, { y: '-100vh', duration: 15, ease: 'none' }, 'contentRises')
-			.to(captionBox, { y: '-150vh', duration: 15, ease: 'none' }, 'contentRises')
-			// .fromTo(title, { y: '80vh' } , { y: '-150vh', duration: 20, ease: 'none' }, 'contentRises-=1')
-			.to(pinnedWrapper, { backgroundColor: '#ffffff', duration: 5, ease: 'none' }, 'contentRises')
-			.to(platMap, { opacity: 1, duration: 3 }, 'contentRises')
-			.to(vintageMap, { opacity: 0, duration: 3 }, 'contentRises')
+			.to(cap8, { opacity: 0, duration: 6 }, 'contentRises')
+			.fromTo(title, { y: '60vh' } , { y: '-150vh', duration: 20, ease: 'power1.in' }, 'contentRises')
+			.to(map, { y: '-100vh', duration: 20, ease: 'power1.in' }, 'contentRises+=6')
+			// .to(captionBox, { y: '-150vh', duration: 15, ease: 'power1.in' }, 'contentRises')
+			.to(pinnedWrapper, { backgroundColor: '#ffffff', duration: 5, ease: 'none' }, 'contentRises+=6')
+			.to(platMap, { opacity: 1, duration: 6 }, 'contentRises+=8')
+			.to(vintageMap, { opacity: 0, duration: 6 }, 'contentRises+=8')
 			// .add('outroIn', 'contentRises+=13')
 			// .to(outro, { opacity: 1, duration: 3 }, 'outroIn')
 		
-		if (import.meta.env.DEV) window.tl = tl;
-
-		if (DEBUG) GSDevTools.create({animation: tl});
-		// console.log(tl.labels, tl.duration());
-		const sorted = Object.entries(tl.labels).sort((a, b) => a[1] - b[1]);
-		console.table(
-		sorted.map(([name, time], i) => ({
-			name,
-			time,
-			// gap: i ? +(time - sorted[i + 1][1]).toFixed(1) : 0,
-			hold: i < sorted.length - 1
-			? +(sorted[i + 1][1] - time).toFixed(1)
-			: +(tl.duration() - time).toFixed(1),
-			percent: +((time / tl.duration()) * 100).toFixed(1)
-		}))
-		);
+		return () => tl.scrollTrigger.kill();
 	});
 </script>
 
@@ -163,7 +143,7 @@
 			</p>
 			<p class="caption" bind:this={cap8}>Over 100,000 parcels were sold.</p>
 		 </div>
-	<!-- <h1 bind:this={title}>Phantom Plats</h1> -->
+	<h1 bind:this={title}>Phantom Plats</h1>
 	</div>
 </div>
 

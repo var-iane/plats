@@ -7,7 +7,7 @@
 	ScrollTrigger.config({ ignoreMobileResize: true });
 
 	let pinnedWrapper;
-	let map, soldParcels, text, units, water, buildings, unbuiltParcels, roads, satellite, title;
+	let map, soldParcels, text, units, water, buildings, unbuiltParcels, roads, roadsWhite, satellite, title, codeLink;
 	let keyWrapper, soldKey, waterKey, buildingsKey, unbuiltKey;
 	let cap1, cap2, cap3, cap4, cap5, cap6, cap7;
 
@@ -16,9 +16,9 @@
 			scrollTrigger: {
 				trigger: pinnedWrapper,
 				start: 'top top',
-				end: '+=6000',
+				end: () => '+=' + Math.min(Math.max(window.innerHeight * 8, 5200), 8800),
 				pin: true,
-				scrub: 1,
+				scrub: 1.5,
 				anticipatePin: 1,
 				// markers: true,
 			}
@@ -36,35 +36,40 @@
 			.add('waterIn', 'soldIn+=7')
 			.to(water, { opacity: 1, duration: 2 }, 'waterIn')
 			.to(buildings, { opacity: 1, duration: 2 }, 'waterIn')
-			.to(soldParcels, { opacity: 0, duration: 2 }, 'waterIn')
+			.to(soldParcels, { opacity: 0.2, duration: 2 }, 'waterIn')
 			.to(cap2, { opacity: 0, duration: 2 }, 'waterIn')
 			.to(cap3, { opacity: 1, duration: 3 }, 'waterIn')
 			.add('unbuiltIn', 'waterIn+=7')
 			.to(unbuiltParcels, { opacity: 1, duration: 2 }, 'unbuiltIn')
+			.to(soldParcels, { opacity: 0, duration: 2 }, 'unbuiltIn')
+			.to(water, { opacity: 0, duration: 2 }, 'unbuiltIn')
 			.to(cap3, { opacity: 0, duration: 2 }, 'unbuiltIn')
 			.to(cap4, { opacity: 1, duration: 3 }, 'unbuiltIn')
-			.add('roadsBeat', 'unbuiltIn+=7')
-			.to(satellite, { opacity: 0.3, duration: 3 }, 'roadsBeat')
-			.to(water, { opacity: 0, duration: 2 }, 'roadsBeat')
-			.to(units, { opacity: 0, duration: 2 }, 'roadsBeat')
-			.to(buildings, { opacity: 0, duration: 2 }, 'roadsBeat')
-			.to(unbuiltParcels, { opacity: 0, duration: 2 }, 'roadsBeat')
-			.to(text, { opacity: 0, duration: 2 }, 'roadsBeat')
-			.to(cap4, { opacity: 0, duration: 2 }, 'roadsBeat')
-			.to(cap5, { opacity: 1, duration: 3 }, 'roadsBeat')
-			.add('satelliteFullIn', 'roadsBeat+=7')
+			.add('satellitePartIn', 'unbuiltIn+=7')
+			.to(satellite, { opacity: 0.3, duration: 6 }, 'satellitePartIn')
+			.to(unbuiltParcels, { opacity: 0.3, duration: 6 }, 'satellitePartIn')
+			.to(units, { opacity: 0, duration: 2 }, 'satellitePartIn')
+			.to(text, { opacity: 0, duration: 2 }, 'satellitePartIn')
+			.to(roads, { opacity: 0, duration: 6 }, 'satellitePartIn+=2')
+			.to(roadsWhite, { opacity: 1, duration: 6 }, 'satellitePartIn+=2')
+			.add('satelliteFullIn', 'satellitePartIn+=7')
 			.to(satellite, { opacity: 1, duration: 6 }, 'satelliteFullIn')
-			.to(roads, { opacity: 0, duration: 6 }, 'satelliteFullIn')
-			.to(cap5, { opacity: 0, duration: 6 }, 'satelliteFullIn+=12')
-			// .to(cap6, { opacity: 1, duration: 3 }, 'satelliteFullIn+=7')
-			.add('endTitle', 'satelliteFullIn+=20')
-			.to(map, { y: '-100vh', duration: 15, ease: 'none' }, 'endTitle')
-			.fromTo(title, { y: '100vh' }, { y: '-150vh', duration: 15, ease: 'none' }, 'endTitle')
+			.to(unbuiltParcels, { opacity: 0, duration: 6 }, 'satelliteFullIn')
+			.to(cap4, { opacity: 0, duration: 2 }, 'satelliteFullIn')
+			.to(cap5, { opacity: 1, duration: 3 }, 'satelliteFullIn')
+			.add('lastBeat', 'satelliteFullIn+=7')
+			.to(buildings, { opacity: 0, duration: 6 }, 'lastBeat')
+			.to(roadsWhite, { opacity: 0, duration: 12 }, 'lastBeat')
+			.to(cap5, { opacity: 0, duration: 2 }, 'lastBeat')
+			.to(cap6, { opacity: 1, duration: 3 }, 'lastBeat')
+			.to(cap6, { opacity: 0, duration: 6 }, 'lastBeat+=12')
+			// .add('endTitle', 'lastBeat+=20')
+			// .to(map, { y: '-100vh', duration: 15, ease: 'power1.in' }, 'endTitle+=5')
+			// .fromTo(title, { y: '70vh' }, { y: '-150vh', duration: 15, ease: 'power1.in' }, 'endTitle')
+			.to(codeLink, { opacity: 1, duration: 2 }, 'lastBeat+=20')
 
 		// tl.to(keyWrapper, { opacity: 1, duration: 0.25 }, 3)
 		// 	.to(keyWrapper, { opacity: 0, duration: 0.1 }, 5)
-
-		
 
 		return () => tl.scrollTrigger.kill();
 	});
@@ -74,43 +79,45 @@
 	<div class="content-container">
 		<div class="caption-box">
 			<p class="caption" bind:this={cap1}>
-				The company's plat maps looked like official development plans. Buyers saw lots tucked in quiet cul-de-sacs, near planned schools and shopping centers, and believed Horizon was developing the area.
+				The company's plat maps looked like official development plans. Buyers saw lots tucked in quiet cul-de-sacs, near planned schools and shopping centers, and believed Horizon was building out the whole area.
 			</p>
 			<p class="caption" bind:this={cap2}>
-				36,000 people bought <span style="color: #731357; font-weight: bold;">over 100,000 lots</span>.
+				36,000 people bought <span style="color: #d68c3f; font-weight: bold;">over 100,000 lots</span>.
 			</p>
 			<p class="caption" bind:this={cap3}>
-				Horizon developed one small area, around an 18-hole golf course. <span style="color: #01bfc3; font-weight: bold;">Buildings</span> went up only where the company had installed <span style="color: #3083bd; font-weight: bold;">water</span> and electricity.
+				Horizon ultimately developed one small area, around an 18-hole golf course. <span style="color: #01bfc3; font-weight: bold;">Buildings</span> went up only where <span style="color: #3083bd; font-weight: bold;">water</span> was available.
 			</p>
 			<p class="caption" bind:this={cap4}>
-				Paved roads and utilities never reached the rest, and <span style="color: #9e9a90; font-weight: bold;">90,000 lots</span> have never been developed.
+				Utilities and paved roads never reached the rest, and <span style="color: #525263; font-weight: bold;">90,000 lots</span> have never been developed.
 			</p>
 			<p class="caption" bind:this={cap5}>
-				The streets are still there, etched into the dirt.
+				This is Horizon City today.
 			</p>
 			<p class="caption" bind:this={cap6}>
-				This is what Horizon City looks like now.
+				The streets are still there, etched into the dirt.
 			</p>
 		</div>
 		<div class="map" bind:this={map}>
 			<img bind:this={satellite} src={`${base}/images/fullmap/satellite-esri.jpeg`} alt="" class="layer">
 			<img
 				bind:this={soldParcels}
-				src={`${base}/images/fullmap/horizon-city-parcels.png`}
+				src={`${base}/images/fullmap/horizon-city-parcels-tan.png`}
 				alt=""
 				class="layer"
 			/>
 			
 			<img
 				bind:this={unbuiltParcels}
-				src={`${base}/images/fullmap/sold-unbuilt-parcels-1.png`}
+				src={`${base}/images/fullmap/sold-unbuilt-parcels-dark.png`}
 				alt=""
 				class="layer"
 			/>
 			<img bind:this={water} src={`${base}/images/fullmap/water-lines-3.svg`} alt="" class="layer" />
-			<img bind:this={text} src={`${base}/images/fullmap/text.svg`} alt="" class="layer" />
+			<img bind:this={text} src={`${base}/images/fullmap/text.png`} alt="" class="layer" />
 			<img bind:this={units} src={`${base}/images/fullmap/units.svg`} alt="" class="layer" />
+			<img bind:this={roadsWhite} src={`${base}/images/fullmap/roads-white.png`} alt="" class="layer" />
 			<img bind:this={roads} src={`${base}/images/fullmap/roads.svg`} alt="" class="layer" />
+			
 			<img
 				bind:this={buildings}
 				src={`${base}/images/fullmap/buildings-stroke.svg`}
@@ -138,7 +145,8 @@
 			</div>
 
 		</div>
-		<h1 bind:this={title}>Phantom Plats</h1>
+		<!-- <h1 bind:this={title}>Phantom Plats</h1> -->
+		<p class="code-link" bind:this={codeLink}>See the code and methods <a href="https://github.com/var-iane/plats" target="_blank">here</a></p>
 	</div>
 </div>
 
@@ -149,7 +157,7 @@
 		height: 100vh;
 		height: 100lvh;
 		overflow: hidden;
-		background-color: #eee9e8;
+		background-color: #fcf9f5;
 	}
 
 	.content-container {
@@ -192,7 +200,7 @@
 	.caption-box {
 		position: relative;
 		flex-shrink: 0;
-		width: clamp(325px, 70dvw, 700px);
+		width: clamp(325px, 70dvw, 750px);
 		height: auto;
 		min-height: 4rem;
 		z-index: 3;
@@ -203,7 +211,7 @@
 		position: absolute;
 		top: 0;
 		left: 0;
-		width: clamp(325px, 70dvw, 700px);
+		width: clamp(325px, 70dvw, 750px);
 		font-family: 'Epilogue', 'Host Grotesk', serif;
 		font-weight: 300;
 		line-height: 1.3;
@@ -215,17 +223,10 @@
 		/* border: 1px solid green; */
 	}
 
-	/* .caption-box {
-		position: absolute;
-		left: 50%;
-		width: clamp(150px, 30dvw, 450px);
-		padding: 6px;
-		z-index: 3;
-		background-color: #cee0dd;
-		border: 1px solid black;
-		border-radius: 8px;
-		font-weight: 300;
-	} */
+	.code-link {
+		opacity: 0;
+		font-size: 0.8rem;
+	}
 
 
 	.key-wrapper {
@@ -241,7 +242,6 @@
 		display: flex;
 		align-items: center;
 		padding: 2px 0px;
-		/* opacity: 0; */
 	}
 
 	.key-label {
