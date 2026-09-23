@@ -74,7 +74,7 @@
 			.to(cap8, { opacity: 1, duration: 3 }, 'vintageBeat3')
 			.add('contentRises', 'vintageBeat3+=11')
 			.to(cap8, { opacity: 0, duration: 6 }, 'contentRises')
-			.fromTo(title, { y: '60vh' } , { y: '-150vh', duration: 20, ease: 'power1.in' }, 'contentRises')
+			.fromTo(title, { y: '60vh', xPercent: -50 } , { y: '-150vh', xPercent: -50, duration: 20, ease: 'power1.in' }, 'contentRises')
 			.to(map, { y: '-100vh', duration: 20, ease: 'power1.in' }, 'contentRises+=6')
 			// .to(captionBox, { y: '-150vh', duration: 15, ease: 'power1.in' }, 'contentRises')
 			.to(pinnedWrapper, { backgroundColor: '#ffffff', duration: 5, ease: 'none' }, 'contentRises+=6')
@@ -146,7 +146,7 @@
 			</p>
 			<p class="caption" bind:this={cap8}>Over 100,000 parcels were sold.</p>
 		 </div>
-	<h1 bind:this={title}>Phantom Plats</h1>
+	<h1 bind:this={title}>Phantom<br>Plats</h1>
 	</div>
 </div>
 
@@ -261,8 +261,9 @@
 		position: absolute;
 		bottom: 0;
 		left: 50%;
-		transform: translate(-50%);
-		z-index: 1;
+		width: fit-content;
+		/* transform: translate(-50%); */
+		z-index: 5;
 	}
 
 </style>
