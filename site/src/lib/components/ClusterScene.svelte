@@ -179,7 +179,7 @@
 
 			<p class="international-note" bind:this={internationalNote}>
 				<span style="color: #ff6b5a; font-weight: 600;">Even all around the world</span>: <br>Buyers
-				were military members stationed overseas, residents of Guam, Germany, Japan.
+				included military stationed overseas; residents of Guam, Germany, Japan.
 			</p>
 		</div>
 	</div>
