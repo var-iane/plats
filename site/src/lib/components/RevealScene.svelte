@@ -66,7 +66,7 @@
 			// .add('endTitle', 'lastBeat+=20')
 			// .to(map, { y: '-100vh', duration: 15, ease: 'power1.in' }, 'endTitle+=5')
 			// .fromTo(title, { y: '70vh' }, { y: '-150vh', duration: 15, ease: 'power1.in' }, 'endTitle')
-			.to(codeLink, { opacity: 1, duration: 2 }, 'lastBeat+=26')
+			.to(codeLink, { opacity: 1, duration: 2 }, 'lastBeat+=20')
 
 		return () => { 
 			tl.scrollTrigger.kill();
@@ -94,7 +94,7 @@
 				This is Horizon City today.
 			</p>
 			<p class="caption" bind:this={cap6}>
-				The streets are still there, etched into the dirt.
+				The streets are still there, <a href="https://maps.app.goo.gl/8kTxbjs78PqrMZ1K9" target="_blank">etched</a> into the dirt.
 			</p>
 		</div>
 		<div class="map" bind:this={map}>
@@ -228,6 +228,10 @@
 	p {
 		margin: 0 0 0.25rem 0;
 		text-wrap: balance;
+	}
+
+	a {
+		color: #d48169;
 	}
 
 	.key-wrapper {
