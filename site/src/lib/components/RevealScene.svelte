@@ -20,6 +20,7 @@
 				pin: true,
 				scrub: 1.5,
 				anticipatePin: 1,
+				invalidateOnRefresh: true,
 				// markers: true,
 			}
 		});
@@ -66,7 +67,9 @@
 			// .add('endTitle', 'lastBeat+=20')
 			// .to(map, { y: '-100vh', duration: 15, ease: 'power1.in' }, 'endTitle+=5')
 			// .fromTo(title, { y: '70vh' }, { y: '-150vh', duration: 15, ease: 'power1.in' }, 'endTitle')
-			.to(codeLink, { opacity: 1, duration: 2 }, 'lastBeat+=20')
+			.to(codeLink, { opacity: 1, duration: 2 }, 'lastBeat+=20');
+		
+		window.addEventListener('load', () => ScrollTrigger.refresh());
 
 		return () => { 
 			tl.scrollTrigger.kill();

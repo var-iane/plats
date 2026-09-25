@@ -36,7 +36,7 @@
 			scrollTrigger: {
 				trigger: pinnedWrapper,
 				start: 'top top',
-				end: '+=8000',
+				end: () => '+=' + Math.min(Math.max(window.innerHeight * 8, 5200), 8800),
 				pin: true,
 				scrub: 1,
 				anticipatePin: 1,
@@ -113,6 +113,8 @@
 			.to(internationalParcels, { opacity: 1, duration: 2 }, 'international+=2')
 			.to(internationalNote, { opacity: 1, duration: 2 }, `international+=2`)
 			.to({}, { duration: 10 });
+
+		window.addEventListener('load', () => ScrollTrigger.refresh());
 
 		return () => {
 			tl.scrollTrigger?.kill();

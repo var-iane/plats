@@ -13,7 +13,7 @@
 			scrollTrigger: {
 				trigger: pinnedWrapper,
 				start: 'top top',
-				end: '+=800',
+				end: () => '+=' + Math.min(Math.max(window.innerHeight * 1.2, 700), 1200),
 				pin: true,
 				scrub: 1,
 				anticipatePin: 1,
@@ -22,6 +22,8 @@
 		});
 
 		tl.from([intro, examples], { opacity: 0, duration: 2 }, 0).to({}, { duration: 10 });
+
+		window.addEventListener('load', () => ScrollTrigger.refresh());
 
 		return () => {
 			tl.scrollTrigger?.kill();

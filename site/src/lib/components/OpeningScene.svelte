@@ -79,9 +79,9 @@
 			// .to(captionBox, { y: '-150vh', duration: 15, ease: 'power1.in' }, 'contentRises')
 			.to(pinnedWrapper, { backgroundColor: '#ffffff', duration: 5, ease: 'none' }, 'contentRises+=6')
 			.to(platMap, { opacity: 1, duration: 6 }, 'contentRises+=8')
-			.to(vintageMap, { opacity: 0, duration: 6 }, 'contentRises+=8')
-			// .add('outroIn', 'contentRises+=13')
-			// .to(outro, { opacity: 1, duration: 3 }, 'outroIn')
+			.to(vintageMap, { opacity: 0, duration: 6 }, 'contentRises+=8');
+		
+		window.addEventListener('load', () => ScrollTrigger.refresh());
 		
 		return () => { 
 			tl.scrollTrigger.kill();
